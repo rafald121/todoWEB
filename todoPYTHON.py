@@ -4,12 +4,13 @@ from flask import Flask, session, render_template, redirect, request, json
 from flask import url_for
 
 app = Flask(__name__)
-app.secret_key="fwgjebhuih4"
+app.secret_key = "fwgjebhuih4"
+
 
 # TODO czemu nie dziala gdy daje metode POST
 @app.route('/')
 def hello_world():
-    print("3")
+    responseRead = False
 
     login = 'rafal'
     password = 'rafal'
@@ -23,29 +24,32 @@ def hello_world():
         'Content-Type': 'application/json'
     }
 
-    print("5")
     jsonData = json.dumps(data)
-    print("jsonData: " + jsonData)
 
-    url = "http://127.0.0.1:5000/login"
-    print("url: " + url)
-    myRequest = Request(url, data=jsonData, headers=headers)
+    myRequest = Request("http://127.0.0.1:5000/login", data=jsonData, headers=headers)
     # TODO co to daje \/
     # myRequest.get_method = lambda: 'POST'
 
     try:
-        print("a tutaj")
         myResponse = urlopen(myRequest)
-
-        print("a tutaj1")
         myResponseDictionary = json.load(myResponse)
-        session['token'] = myResponseDictionary['token']
-        session['user_name'] = login
 
-        print ("mój token to : ")
-        print session['token']
+        if myResponseDictionary['info'] == 'OK' and myResponse.getcode() == 200:
+            session['token'] = myResponseDictionary['token']
+            session['login'] = login
+            session['id'] = myResponseDictionary['userID']
+            print("token: ")
+            print(session['token'])
+            print("login:")
+            print(session['login'])
+            print("id:")
+            print(session['id'])
 
-        return redirect(url_for('allMessages'))
+            # redirect to todoList
+            return redirect(url_for('allMessages'))
+        else:
+            print myResponseDictionary['error']
+            # redirect to login again
 
     except HTTPError as e:
         print e.code
@@ -55,8 +59,8 @@ def hello_world():
 
 @app.route("/allMessages")
 def allMessages():
-
     print("przekierowano do allMessages")
+
     return "test"
 
 
