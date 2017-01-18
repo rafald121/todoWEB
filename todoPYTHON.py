@@ -13,14 +13,14 @@ def hello_world():
     else:
         return redirect(url_for("loginPage"))
 
-# pobiera ile niezrobionych
+# pobiera ile niezrobionych i wyswietla glowny panel
 @app.route('/main')
 def main():
-    # render template dla main Page
-    return "main"
+    return render_template("mainPage.html")
+
 
 @app.route('/login')
-def loginPage():
+def login():
     if 'token' in session:
         return redirect(url_for("main"))
     else:
@@ -33,6 +33,7 @@ def loginPage():
 def checkLogin():
 
     myResponseDictionary = None
+    # TODO error that is returning when login or password is valid
 
     login = request.form['login']
     password = request.form['password']
@@ -68,7 +69,7 @@ def checkLogin():
             print(session['id'])
 
             # redirect to todoList
-            return redirect(url_for('allMessages'))
+            return redirect(url_for('main'))
         else:
             return render_template("logowanie.html", error = "hao")
             # print myResponseDictionary['error']
@@ -80,8 +81,10 @@ def checkLogin():
         return render_template("logowanie.html", error=True, errorMessage="blad logowania")
         # return render_template("logowanie.html", error=myResponseDictionary['error'])
 
-
-
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 @app.route("/allMessages")
 def allMessages():
