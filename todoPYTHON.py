@@ -16,7 +16,7 @@ def hello_world():
 # pobiera ile niezrobionych i wyswietla glowny panel
 @app.route('/main')
 def main():
-    return render_template("mainPage.html")
+    return render_template("mainPage.html", login=session['login'])
 
 
 @app.route('/login')
@@ -27,8 +27,7 @@ def login():
         return render_template("logowanie.html")
 
 
-# TODO czemu nie dziala gdy daje metode POST
-# @app.route('/checkLogin')
+# TODO co zmieni gdy usune POST albo GET
 @app.route('/checkLogin', methods=['POST', 'GET'])
 def checkLogin():
 
