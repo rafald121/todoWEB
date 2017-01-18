@@ -1,0 +1,192 @@
+.leftPane{
+	width: 25%;
+}
+
+body {
+      color:#000000;
+      background-color:lightgrey;
+      background-repeat:no-repeat;
+    }
+    
+
+table {
+    background-color: #9775AA;
+    opacity:0.6;
+    align-self: left;
+    align-content: left;
+    align-items: left;
+    align: left;
+}
+.calosc{
+    position: fixed;
+
+    margin-top: 100px;
+    top: 20%;
+}
+
+.loginBar{
+	background-color: #f2f2f2;
+	display: flex;
+	padding: 5px;
+	/*margin: 10px;*/
+
+}
+.logoutButton{
+    position: absolute;
+    display: flex;
+    top: 39px;
+    right: 30px;
+	width: 70px;
+	height: 20px;
+	text-align: center;
+	border-style: solid;
+    border-color: #ddd7d7;
+    size: 20px;
+}
+.contentMessageTable{
+    width: 50%;
+    opacity:0.6;
+}
+
+.makeMessage, .allMessages, .sendMessages{
+    background: #6b7375;
+    width: 70%;
+    height: 45px;
+    margin: auto;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+
+    color: lightgrey;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    line-height: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: black 5px 5px 20px;
+    border-radius: 10px;
+}
+.leftPane{
+    width: 15%;
+    float: left;
+    height: 80%;
+    top: 20%;
+    display: inline-block;
+    background: #7C151D;
+    position: fixed ;
+}
+
+.mainPane {
+    background: lightgrey;
+    width: 80%;
+    height: auto;
+    display: inline-block;
+    align-self: center;
+    float: none;
+    margin-left: 20%;
+    margin-right: 5%;
+    position: fixed;
+    top: 20%;
+
+}
+
+
+/*table, th, td {*/
+    /*border: 1px solid black;*/
+    /*border-collapse: collapse;*/
+/*}*/
+
+
+#receiverTextField{
+	width: 30%;
+	position: absolute;
+	left: 15%;
+}
+#newMessageTitle{
+	position: absolute;
+	width: 30%;
+	left: 15%;
+}
+#newMessageContent{
+	position: absolute;
+	width: 30%;
+	height: 50%;
+	left: 15%;
+}
+#confirm{
+	position: absolute;
+	top: 145%;
+	left: 15%;
+	width: 30%;
+	height: 30px;
+}
+.tableItem{
+    background-color: #cccccc;
+}
+
+
+
+/*musi byc \/*/
+th, td {
+    padding: 7px;
+    text-align: center;
+}
+
+table tr:nth-child(even) {
+
+    background-color: #ffffff;
+}
+table tr:nth-child(odd) {
+   background-color:#ffffff;
+}
+table th#topka3  {
+    background-color: #ffffff;
+    color: #ffffff;
+}
+table th#topka2  {
+    background-color: #ffffff;
+    color: #ffffff;
+}
+table th#topka1  {
+    background-color: #ffffff;
+    color: #ffffff;
+}
+
+table th{
+    background-color: wheat;
+    color: black;
+}
+table caption{
+ font-size: 2em;
+ font-family:CourierNew;
+ margin-top: 5%;
+ margin-bottom: 1%;
+}
+q {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+q:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+q p {
+  display: inline;
+}
+p {
+color:#9775AA;
+font-size: 1.3em;
+}
+a:link    {color:green; background-color:transparent; text-decoration:none}
+a:visited {color:black; background-color:transparent; text-decoration:none}
+a:hover   {color:red; background-color:transparent; text-decoration:underline}
+a:active  {color:yellow; background-color:transparent; text-decoration:underline}
+
+
