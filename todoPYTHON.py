@@ -6,14 +6,33 @@ from flask import url_for
 app = Flask(__name__)
 app.secret_key = "fwgjebhuih4"
 
-
-# TODO czemu nie dziala gdy daje metode POST
 @app.route('/')
 def hello_world():
-    responseRead = False
+    if 'token' in session:
+        return redirect(url_for("main"))
+    else:
+        return redirect(url_for("loginPage"))
 
-    login = 'rafal'
-    password = 'rafal'
+# pobiera ile niezrobionych
+@app.route('/main')
+def main():
+    return "main"
+
+@app.route('/login')
+def loginPage():
+    if 'token' in session:
+        return redirect(url_for("main"))
+    else:
+        return render_template("logowanie.html")
+
+
+# TODO czemu nie dziala gdy daje metode POST
+# @app.route('/checkLogin')
+@app.route('/checkLogin', methods=['POST','GET'])
+def checkLogin():
+
+    login = request.form['login']
+    password = request.form['password']
 
     data = {
         "login": login,
