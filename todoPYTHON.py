@@ -16,6 +16,7 @@ def hello_world():
 # pobiera ile niezrobionych
 @app.route('/main')
 def main():
+
     return "main"
 
 @app.route('/login')
@@ -28,7 +29,7 @@ def loginPage():
 
 # TODO czemu nie dziala gdy daje metode POST
 # @app.route('/checkLogin')
-@app.route('/checkLogin', methods=['POST','GET'])
+@app.route('/checkLogin', methods=['POST', 'GET'])
 def checkLogin():
 
     login = request.form['login']
@@ -69,11 +70,13 @@ def checkLogin():
         else:
             print myResponseDictionary['error']
             # redirect to login again
-
     except HTTPError as e:
         print e.code
         print e.reason
-        return e.read()
+        return render_template("logowanie.html")
+               # return render_template("logowanie.html", error=myResponseDictionary['error'])
+
+        # return e.read()
 
 
 @app.route("/allMessages")
