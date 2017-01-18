@@ -11,7 +11,7 @@ def hello_world():
     if 'token' in session:
         return redirect(url_for("main"))
     else:
-        return redirect(url_for("loginPage"))
+        return redirect(url_for("login"))
 
 # pobiera ile niezrobionych i wyswietla glowny panel
 @app.route('/main')
