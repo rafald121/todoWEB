@@ -16,7 +16,12 @@ def hello_world():
 # pobiera ile niezrobionych
 @app.route('/main')
 def main():
+<<<<<<< Updated upstream
 
+||||||| ancestor
+=======
+    # render template dla main Page
+>>>>>>> Stashed changes
     return "main"
 
 @app.route('/login')
@@ -31,6 +36,8 @@ def loginPage():
 # @app.route('/checkLogin')
 @app.route('/checkLogin', methods=['POST', 'GET'])
 def checkLogin():
+
+    myResponseDictionary = None
 
     login = request.form['login']
     password = request.form['password']
@@ -68,15 +75,23 @@ def checkLogin():
             # redirect to todoList
             return redirect(url_for('allMessages'))
         else:
-            print myResponseDictionary['error']
+            return render_template("logowanie.html", error = "hao")
+            # print myResponseDictionary['error']
             # redirect to login again
     except HTTPError as e:
         print e.code
         print e.reason
+<<<<<<< Updated upstream
         return render_template("logowanie.html")
                # return render_template("logowanie.html", error=myResponseDictionary['error'])
 
         # return e.read()
+||||||| ancestor
+        return e.read()
+=======
+        # TODO sprawic, aby errorMessage zwracalo blad z API
+        return render_template("logowanie.html", error= True, errorMessage = "blad logowania")
+>>>>>>> Stashed changes
 
 
 @app.route("/allMessages")
