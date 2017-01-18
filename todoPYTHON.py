@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key="fwgjebhuih4"
 
 # TODO czemu nie dziala gdy daje metode POST
-@app.route('/', methods=['GET'])
+@app.route('/')
 def hello_world():
     print("3")
 
