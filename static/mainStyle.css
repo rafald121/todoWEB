@@ -102,7 +102,7 @@ table {
     /*border-collapse: collapse;*/
 /*}*/
 
-
+/*NEW TASK*/
 #newTaskTitle, #newTaskDetails, #newTaskTimeToDo{
 	width: 30%;
 	position: absolute;
@@ -114,8 +114,35 @@ table {
 	left: 15%;
 	width: 30%;
 	height: 30px;
+    top: 120%;
 }
 
+/*#checkBoxes{*/
+    /*position: absolute;*/
+	/*left: 15%;*/
+	/*width: 30%;*/
+/*}*/
+
+/*#schoolTag{*/
+    /*position: absolute;*/
+	/*left: 15%;*/
+	/*width: 10%;*/
+/*}*/
+
+/*#workTag{*/
+    /*position: absolute;*/
+	/*left: 25%;*/
+	/*width: 10%;*/
+/*}*/
+
+/*#homeTag{*/
+    /*position: absolute;*/
+	/*left: 55%;*/
+	/*width: 10%;*/
+/*}*/
+
+
+/*********/
 .tableItem{
     background-color: #cccccc;
 }
