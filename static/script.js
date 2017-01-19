@@ -31,8 +31,8 @@ function createNewTaskFunction() {
 
 
     $.ajax({
-        type: "POST",
-        url: "http://127.0.0.1:4999/tasks",
+        type: "GET",
+        url: "http://127.0.0.1:4999/createTask",
         dataType: "text",
         success: function (response) {
             var currSection = document.getElementById("mainPane");
