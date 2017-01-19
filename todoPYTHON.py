@@ -6,12 +6,14 @@ from flask import url_for
 app = Flask(__name__)
 app.secret_key = "fwgjebhuih4"
 
+
 @app.route('/')
 def hello_world():
     if 'token' in session:
         return redirect(url_for("main"))
     else:
         return redirect(url_for("login"))
+
 
 # pobiera ile niezrobionych i wyswietla glowny panel
 @app.route('/main', methods=['GET'])
@@ -25,17 +27,18 @@ def main():
             responseJson = urlopen(myRequest)
             responseJsonData = json.load(responseJson)
 
-            if responseJson.getcode()==200:
+            if responseJson.getcode() == 200:
                 undoneQuantity = responseJsonData['undone']
             else:
                 responseJsonData = {"error": "response code is not 200"}
 
-            return render_template("mainPage.html", login = session['login'], undoneQuantity=undoneQuantity)
+            return render_template("mainPage.html", login=session['login'], undoneQuantity=undoneQuantity)
 
         except HTTPError as e:
             print(e.code)
             print(e.message)
             return json.load(e)['error']
+
 
 @app.route('/login')
 def login():
@@ -48,7 +51,6 @@ def login():
 # TODO co zmieni gdy usune POST albo GET
 @app.route('/checkLogin', methods=['POST', 'GET'])
 def checkLogin():
-
     myResponseDictionary = None
     # TODO error that is returning when login or password is valid
 
@@ -82,7 +84,7 @@ def checkLogin():
             # TODO redirect to todoList
             return redirect(url_for('main'))
         else:
-            return render_template("logowanie.html", error = True, errorMessage = "sprawdzic jesli wyskoczy ten komunikat")
+            return render_template("logowanie.html", error=True, errorMessage="sprawdzic jesli wyskoczy ten komunikat")
 
     except HTTPError as e:
         print e.code
@@ -90,6 +92,7 @@ def checkLogin():
         # TODO sprawic, aby errorMessage zwracalo blad z API
         return render_template("logowanie.html", error=True, errorMessage=json.load(e)['error'])
         # return render_template("logowanie.html", error=myResponseDictionary['error'])
+
 
 @app.route('/logout')
 def logout():
@@ -114,11 +117,10 @@ def tasks():
             myResponse = urlopen(myRequest)
             tasksData = json.load(myResponse)
 
-
             listOfTask = tasksData
             print (listOfTask)
 
-            return render_template("taskList.html", taskList = listOfTask)
+            return render_template("taskList.html", taskList=listOfTask)
 
             # titleList = []
             # detailsList = []
@@ -129,6 +131,7 @@ def tasks():
 
             # print(titleList)
             # print(detailsList)
+
         except HTTPError as e:
             print(e.code)
             print(e.message)
@@ -137,12 +140,9 @@ def tasks():
     else:
         return redirect(url_for('login'))
 
-    # TODO RETURN RENDER TEMPLATE LIST OF MESEDŻ
-    return redirect(url_for('main'))
 
 @app.route("/allMessages")
 def allMessages():
-
     print("przekierowano do allMessages")
 
     return "test"

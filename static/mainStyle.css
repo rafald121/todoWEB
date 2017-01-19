@@ -1,6 +1,12 @@
 .leftPane{
 	width: 25%;
 }
+#taskListDiv{
+    position: fixed;
+    left: 17.5%;
+    width: 47%;
+}
+
 
 body {
       color:#000000;

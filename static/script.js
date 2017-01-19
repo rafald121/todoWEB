@@ -5,7 +5,7 @@
 window.onload = function () {
 
     var showAllTasksBtn = document.getElementById("listOfAllTasks");
-    showAllNewMessagesBtn.addEventListener('click',listOfAllTasksFunction, false);
+    showAllTasksBtn.addEventListener('click',listOfAllTasksFunction, false);
 
 };
 
@@ -20,5 +20,4 @@ function listOfAllTasksFunction() {
             currSection.innerHTML = response;
         }
     })
-
 }

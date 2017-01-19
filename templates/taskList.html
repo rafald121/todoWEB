@@ -1,40 +1,44 @@
 <h1> Twoje zadania do wykonania: </h1>
 
-<table>
-    <thead>
-        <tr>
-            <td class="">Od:</td>
-            <td style="min-width: 400px;text-align: left" class="">Temat:</td>
-            <td class="">Usuń
+<div id="taskListDiv">
 
-            </td>
-        </tr>
-    </thead>
+    <table>
+        <thead>
+            <tr>
+                <td class="">Temat:</td>
+                <td style="min-width: 400px;text-align: left" class="">Szczegóły</td>
+                <td class="">Usuń
 
-    {% for task in taskList %}
+                </td>
+            </tr>
+        </thead>
 
-        <tr>
-            <td class="task-link">
-                <a class="task-link" id="{{ task["id"] }}">
-                    {{ task["title"] }}
-                </a>
-            </td>
+        {% for task in taskList %}
 
-            <td style="text-align: left" class="task-link">
-                <a class="task-link" id="{{ task["id"] }}">
-                    {{ task["details"] }}
-                </a>
-            </td>
+            <tr>
+                <td class="task-link">
+                    <a class="task-link" id="{{ task["id"] }}">
+                        {{ task["title"] }}
+                    </a>
+                </td>
 
-            <td>
-                <button class="deleteButton"
-                        id="{{ task["id"] }}">
-                    <i class="fa fa-trash">
+                <td style="text-align: left" class="task-link">
+                    <a class="task-link" id="{{ task["id"] }}">
+                        {{ task["details"] }}
+                    </a>
+                </td>
 
-                    </i>
-                </button>
-            </td>
-        </tr>
-    {% endfor %}
+                <td>
+                    <button class="deleteButton"
+                            id="{{ task["id"] }}">
+                        <i class="fa fa-trash">
 
-</table>
+                        </i>
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+</div>
+

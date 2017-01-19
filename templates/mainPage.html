@@ -24,8 +24,7 @@
             </div>
 
             <div class="listOfAllTasks">
-                <a id="listOfAllTasks"
-                href='{{ url_for('tasks') }}'>
+                <a id="listOfAllTasks">
 
                     Lista zadań
 {#                TODO uruchomic ilość niewykonanych zadań #}
@@ -36,20 +35,16 @@
                 </a>
             </div>
 
-{#            TODO wstawić liste w zaleznosci od tagu, liste nie przeczytanych#}
-{#            <div class="listOfUsers" >#}
-{#                <a id="listOfUsers"#}
-{#                   href='http://127.0.0.1:5000/listOfUsers'>Test</a>#}
-{#            </div>#}
-
         </div>
 
         <section class="mainPane" id="mainPane">
-        MAIN PANE SECTION WHERE SHOULD LIST APPEAR
-{#        TODO uruchomic JS ze zmiennymi section_mainpane#}
             {% if section_mainPane is defined %}
                 {{ section_mainPane }}
             {% endif %}
+
+
+        MAIN PANE SECTION WHERE SHOULD LIST APPEAR
+{#        TODO uruchomic JS ze zmiennymi section_mainpane#}
         </section>
     </div>
 
