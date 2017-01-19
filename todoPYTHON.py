@@ -113,10 +113,32 @@ def logout():
 
 @app.route("/tasks", methods=['GET'])
 def tasks():
+    if 'token' in session:
+        myRequest = Request("http://127.0.0.1:5000/tasks",
+                            headers={"token": session['token'], "Content-Type": 'application/json'}
+                            )
+        myResponse = urlopen(myRequest).read
+        tasksData = json.load(myResponse)
+
+        titleList = []
+        detailsList = []
+
+        for singleTask in tasksData:
+            titleList.append(singleTask['title'])
+            detailsList.append(singleTask['details'])
+
+        print(titleList)
+        print(detailsList)
+        return "hap koniec"
+    else:
+        return redirect(url_for('login'))
+
+
     return ("nic")
 
 @app.route("/allMessages")
 def allMessages():
+
     print("przekierowano do allMessages")
 
     return "test"
