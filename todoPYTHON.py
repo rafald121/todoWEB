@@ -16,7 +16,10 @@ def hello_world():
 # pobiera ile niezrobionych i wyswietla glowny panel
 @app.route('/main', methods=['GET'])
 def main():
-    return render_template("mainPage.html", login = session['login'])
+    if 'token' in session:
+        return render_template("mainPage.html", login = session['login'])
+    else:
+        return redirect(url_for('login'))
     # undoneQuantity = None
     #
     # token = session['token']
@@ -109,7 +112,7 @@ def logout():
 
 
 @app.route("/tasks", methods=['GET'])
-def listOfTasks():
+def tasks():
     return ("nic")
 
 @app.route("/allMessages")
