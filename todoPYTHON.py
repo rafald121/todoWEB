@@ -14,7 +14,7 @@ def hello_world():
         return redirect(url_for("login"))
 
 # pobiera ile niezrobionych i wyswietla glowny panel
-@app.route('/main')
+@app.route('/main', methods=['GET'])
 def main():
     undoneQuantity = None
 
