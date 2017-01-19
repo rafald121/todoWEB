@@ -99,6 +99,11 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+@app.route("/tasks", methods=['POST'])
+def createTask():
+    print("create task clicked and python")
+    return render_template("newTask.html")
+
 
 @app.route("/tasks", methods=['GET'])
 def tasks():

@@ -1,0 +1,21 @@
+<form  class="newMessageWindow" id="newMessageForm" action="{{ url_for('createTask')}}" method='POST'>
+
+    Tytuł zadania:
+    <input type="text" id="newTaskTitle" name="newTaskTitle">
+    <br>
+    Szczegóły wiadomości:
+    <input type="text" id="newTaskDetails" name="newTaskDetails">
+    <br>
+    Czas na zrobienie:
+    <input type="text" id="newTaskTimeToDo" name="newTaskTimeToDo">
+    <br>
+{#    <div id="checkBoxes">#}
+        Tag:
+        <input type="checkbox" id="schoolTag" name="schoolTag" value="schoolTag"> School
+        <input type="checkbox" id="workTag" name="workTag" value="workTag" > Work
+        <input type="checkbox" id="homeTag" name="homeTag" value="homeTag" > Home <br>
+{#    </div>#}
+
+    <input type="submit" id="newTaskConfirm" name="confirmReceiverTitle" value="Wyślij">
+
+</form>

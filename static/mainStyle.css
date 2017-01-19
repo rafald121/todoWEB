@@ -103,29 +103,19 @@ table {
 /*}*/
 
 
-#receiverTextField{
+#newTaskTitle, #newTaskDetails, #newTaskTimeToDo{
 	width: 30%;
 	position: absolute;
 	left: 15%;
 }
-#newMessageTitle{
+
+#newTaskConfirm{
 	position: absolute;
-	width: 30%;
-	left: 15%;
-}
-#newMessageContent{
-	position: absolute;
-	width: 30%;
-	height: 50%;
-	left: 15%;
-}
-#confirm{
-	position: absolute;
-	top: 145%;
 	left: 15%;
 	width: 30%;
 	height: 30px;
 }
+
 .tableItem{
     background-color: #cccccc;
 }
