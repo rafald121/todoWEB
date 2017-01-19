@@ -1,0 +1,43 @@
+<div id="taskContent">
+
+    {% if task is defined %}
+        <table>
+
+            <thead>
+                <tr>
+                    <td>Title:</td>
+                    <td style="min-width: 400px;text-align: left">Details:</td>
+                    <td>Time to do:</td>
+                    <td>Tag:</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                </tr>
+            </thead>
+
+            <td>
+                {{ task['title'] }}
+            </td>
+
+
+            <td>
+                {{ task['details'] }}
+            </td>
+
+            <td>
+                {{ task['timeToDo'] }}
+            </td>
+
+            <td>
+               {{ task['tag']  }}
+            </td>
+
+            <td id="{{ task['id'] }}">
+                <i class="fa fa-pencil-square-o"></i>
+            </td>
+
+            <td id="{{ task['id'] }}">
+                <i class="fa fa-trash"></i>
+            </td>
+        </table>
+    {% endif %}
+</div>

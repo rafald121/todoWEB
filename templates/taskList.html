@@ -1,17 +1,16 @@
-<h1> Twoje zadania do wykonania: </h1>
+<h1>Your list of tasks to do: </h1>
 
 <div id="taskListDiv">
 
     <table>
         <thead>
             <tr>
-                <td class="">Title:</td>
-                <td style="min-width: 400px;text-align: left" class="">Details:</td>
-                <td >Time to do:</td>
-                <td class="">Edytuj
-                <td class="">Usuń
-
-                </td>
+                <td>Title:</td>
+                <td style="min-width: 400px;text-align: left">Details:</td>
+                <td>Time to do:</td>
+                <td>Tag:</td>
+                <td>Edit</td>
+                <td>Delete</td>
             </tr>
         </thead>
 
@@ -29,10 +28,16 @@
                         {{ task["details"] }}
                     </a>
                 </td>
-
+{#TODO po kliknieciu w taga otwiera sie lista tagow (pomysl) #}
                 <td style="text-align: left" class="task-link">
                     <a class="task-link" id="{{ task["id"] }}">
                         {{ task["timeToDo"] }}
+                    </a>
+                </td>
+
+                <td style="text-align: left" class="task-link">
+                    <a class="task-link" id="{{ task["id"] }}">
+                        {{ task["tag"] }}
                     </a>
                 </td>
 
