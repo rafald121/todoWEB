@@ -106,6 +106,11 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+
+@app.route("/tasks", methods=['GET'])
+def listOfTasks():
+    return ("nic")
+
 @app.route("/allMessages")
 def allMessages():
     print("przekierowano do allMessages")
