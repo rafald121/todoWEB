@@ -17,8 +17,6 @@ def hello_world():
 @app.route('/main', methods=['GET'])
 def main():
     if 'token' in session:
-        status = 400
-
 
         headers = {'token': session['token']}
         myRequest = Request("http://127.0.0.1:5000/notdone", headers=headers)
@@ -29,7 +27,6 @@ def main():
 
             if responseJson.getcode()==200:
                 undoneQuantity = responseJsonData['undone']
-                status = 200
             else:
                 responseJsonData = {"error": "response code is not 200"}
 
@@ -39,35 +36,6 @@ def main():
             print(e.code)
             print(e.message)
             return json.load(e)['error']
-
-
-
-
-
-    # undoneQuantity = None
-    #
-    # token = session['token']
-    # requestData = {'token': token}
-    # requestHeaders = {"Content-Type": "application/json"}
-    #
-    # myRequest = Request("http://127.0.0.1:5000/notdone", data=requestData, headers=requestHeaders)
-    #
-    # try:
-    #     responseJson = urlopen(myRequest)
-    #     responseJsonData = json.load(responseJson)
-    #
-    #     if responseJson.getcode() == 200:
-    #         undoneQuantity = responseJsonData['undone']
-    #
-    #         return render_template("mainPage.html", login = session['login'], undoneQuantity=undoneQuantity)
-    #     else:
-    #         return responseJsonData['error']
-    # except HTTPError as e:
-    #     print(e.code)
-    #     print(e.message)
-    #     # TODO dodac w mainPage miejsce na komunikaty o np. niepoprawnym wczytaniu          niewykonanych zadań
-    #     # return render_template("mainPage.html")
-    #     return responseJsonData['error']
 
 @app.route('/login')
 def login():
@@ -110,14 +78,8 @@ def checkLogin():
             session['token'] = myResponseDictionary['token']
             session['login'] = login
             session['id'] = myResponseDictionary['userID']
-            print("token: ")
-            print(session['token'])
-            print("login:")
-            print(session['login'])
-            print("id:")
-            print(session['id'])
 
-            # redirect to todoList
+            # TODO redirect to todoList
             return redirect(url_for('main'))
         else:
             return render_template("logowanie.html", error = True, errorMessage = "sprawdzic jesli wyskoczy ten komunikat")
@@ -126,7 +88,7 @@ def checkLogin():
         print e.code
         print e.reason
         # TODO sprawic, aby errorMessage zwracalo blad z API
-        return render_template("logowanie.html", error=True, errorMessage="blad logowania")
+        return render_template("logowanie.html", error=True, errorMessage=json.load(e)['error'])
         # return render_template("logowanie.html", error=myResponseDictionary['error'])
 
 @app.route('/logout')
@@ -145,13 +107,9 @@ def tasks():
             'token': session['token']
         }
 
-        print("token: ")
-        print(session['token'])
-
         myRequest = Request("http://127.0.0.1:5000/tasks", headers=headers)
         myRequest.get_method = lambda: 'GET'
 
-        print("po myRequest, przed myResponse")
         try:
             myResponse = urlopen(myRequest)
             tasksData = json.load(myResponse)
@@ -166,7 +124,6 @@ def tasks():
             print(titleList)
             print(detailsList)
         except HTTPError as e:
-
             print(e.code)
             print(e.message)
             return json.load(e)['error']
