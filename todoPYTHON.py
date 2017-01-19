@@ -17,9 +17,33 @@ def hello_world():
 @app.route('/main', methods=['GET'])
 def main():
     if 'token' in session:
-        return render_template("mainPage.html", login = session['login'])
-    else:
-        return redirect(url_for('login'))
+        status = 400
+
+
+        headers = {'token': session['token']}
+        myRequest = Request("http://127.0.0.1:5000/notdone", headers=headers)
+
+        try:
+            responseJson = urlopen(myRequest)
+            responseJsonData = json.load(responseJson)
+
+            if responseJson.getcode()==200:
+                undoneQuantity = responseJsonData['undone']
+                status = 200
+            else:
+                responseJsonData = {"error": "response code is not 200"}
+
+            return render_template("mainPage.html", login = session['login'], undoneQuantity=undoneQuantity)
+
+        except HTTPError as e:
+            print(e.code)
+            print(e.message)
+            return json.load(e)['error']
+
+
+
+
+
     # undoneQuantity = None
     #
     # token = session['token']
@@ -113,28 +137,45 @@ def logout():
 
 @app.route("/tasks", methods=['GET'])
 def tasks():
+    print("in tasks")
+    print(session['token'])
     if 'token' in session:
-        myRequest = Request("http://127.0.0.1:5000/tasks",
-                            headers={"token": session['token'], "Content-Type": 'application/json'}
-                            )
-        myResponse = urlopen(myRequest).read
-        tasksData = json.load(myResponse)
 
-        titleList = []
-        detailsList = []
+        headers = {
+            'token': session['token']
+        }
 
-        for singleTask in tasksData:
-            titleList.append(singleTask['title'])
-            detailsList.append(singleTask['details'])
+        print("token: ")
+        print(session['token'])
 
-        print(titleList)
-        print(detailsList)
-        return "hap koniec"
+        myRequest = Request("http://127.0.0.1:5000/tasks", headers=headers)
+        myRequest.get_method = lambda: 'GET'
+
+        print("po myRequest, przed myResponse")
+        try:
+            myResponse = urlopen(myRequest)
+            tasksData = json.load(myResponse)
+
+            titleList = []
+            detailsList = []
+
+            for singleTask in tasksData:
+                titleList.append(singleTask['title'])
+                detailsList.append(singleTask['details'])
+
+            print(titleList)
+            print(detailsList)
+        except HTTPError as e:
+
+            print(e.code)
+            print(e.message)
+            return json.load(e)['error']
+
     else:
         return redirect(url_for('login'))
 
-
-    return ("nic")
+    # TODO RETURN RENDER TEMPLATE LIST OF MESEDŻ
+    return redirect(url_for('main'))
 
 @app.route("/allMessages")
 def allMessages():
