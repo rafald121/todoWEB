@@ -10,24 +10,24 @@
             </td>
         </tr>
         </thead>
-        {% for i in range(sendersList|length) %}
+        {% for i in range(tasksList|length) %}
             <tr>
-                <td class="message-link">
-                    <a class="message-link" id="{{ messageID[i] }}">
-                        {{ sendersList[i] }}
+                <td class="task-link">
+                    <a class="message-link" id="{{ taskID[i] }}">
+                        {{ taskID[i] }}
                     </a>
                 </td>
 
-                <td style="text-align: left" class="message-link">
-                    <a id="{{ messageID[i] }}" class="message-link">
-                        {{ subjectsList[i] }}
+                <td style="text-align: left" class="task-link">
+                    <a id="{{ taskID[i] }}" class="task-link">
+                        {{ taskID[i] }}
                     </a>
                 </td>
 
                 <td>
                     <button
                             class="deleteButton"
-                            id="{{ messageID[i] }}">
+                            id="{{ taskID[i] }}">
                         <i class="fa fa-trash">
 
                         </i>
