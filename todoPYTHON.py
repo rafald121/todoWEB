@@ -114,15 +114,21 @@ def tasks():
             myResponse = urlopen(myRequest)
             tasksData = json.load(myResponse)
 
-            titleList = []
-            detailsList = []
 
-            for singleTask in tasksData:
-                titleList.append(singleTask['title'])
-                detailsList.append(singleTask['details'])
+            listOfTask = tasksData
+            print (listOfTask)
 
-            print(titleList)
-            print(detailsList)
+            return render_template("taskList.html", taskList = listOfTask)
+
+            # titleList = []
+            # detailsList = []
+            #
+            # for singleTask in tasksData:
+            #     titleList.append(singleTask['title'])
+            #     detailsList.append(singleTask['details'])
+
+            # print(titleList)
+            # print(detailsList)
         except HTTPError as e:
             print(e.code)
             print(e.message)

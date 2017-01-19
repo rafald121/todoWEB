@@ -1,0 +1,40 @@
+<h1> Twoje zadania do wykonania: </h1>
+
+<table>
+    <thead>
+        <tr>
+            <td class="">Od:</td>
+            <td style="min-width: 400px;text-align: left" class="">Temat:</td>
+            <td class="">Usuń
+
+            </td>
+        </tr>
+    </thead>
+
+    {% for task in taskList %}
+
+        <tr>
+            <td class="task-link">
+                <a class="task-link" id="{{ task["id"] }}">
+                    {{ task["title"] }}
+                </a>
+            </td>
+
+            <td style="text-align: left" class="task-link">
+                <a class="task-link" id="{{ task["id"] }}">
+                    {{ task["details"] }}
+                </a>
+            </td>
+
+            <td>
+                <button class="deleteButton"
+                        id="{{ task["id"] }}">
+                    <i class="fa fa-trash">
+
+                    </i>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
