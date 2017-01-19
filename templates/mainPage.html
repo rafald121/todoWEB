@@ -11,7 +11,7 @@
 <body>
 
     <div class="loginBar">
-			<h1> Zalogowany jako: {{login}}</h1>
+			<h1> Logged as: {{login}}</h1>
 
 			<div class="logoutButton">
 					<a id="logoutText" href='{{url_for('logout') }}'> Wyloguj  </a>
@@ -21,21 +21,39 @@
         <div class="leftPane">
 
             <div class="addNewTask" >
-                <a id="addNewTask">Dodaj nowe zadanie</a>
+                <a id="addNewTask">Add new task</a>
             </div>
 
             <div class="listOfAllTasks">
                 <a id="listOfAllTasks">
 
-                    Lista zadań
+                    Tasks list
 {#                TODO uruchomic ilość niewykonanych zadań #}
-                    {% if undoneQuantity !=0 %}
-                        <br>
-                        Nowe({{ undoneQuantity }})
+                    {% if undoneQuantity !=0 %},<br>
+                        New({{ undoneQuantity }})
                     {% endif %}
                 </a>
             </div>
 
+            <p class="napisOTagach">List of tasks by tag </p>
+
+            <div class="listOfSchoolTasks">
+                <a id="listOfSchoolTasks">
+                    School tasks
+                </a>
+            </div>
+
+            <div class="listOfWorkTasks">
+                <a id="listOfWorkTasks">
+                    Work tasks
+                </a>
+            </div>
+
+            <div class="listOfHomeTasks">
+                <a id="listOfHomeTasks">
+                    Home tasks
+                </a>
+            </div>
         </div>
 
         <section class="mainPane" id="mainPane">

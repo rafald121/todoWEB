@@ -54,7 +54,7 @@ table {
     opacity:0.6;
 }
 
-.addNewTask, .listOfAllTasks{
+.addNewTask, .listOfAllTasks, .listOfSchoolTasks, .listOfWorkTasks, .listOfHomeTasks{
     background: #6b7375;
     width: 70%;
     height: 45px;
@@ -72,6 +72,20 @@ table {
     box-shadow: black 5px 5px 20px;
     border-radius: 10px;
 }
+
+.napisOTagach{
+    background-color: #fffdfe;
+    text-align: center;
+    align-content: center;
+    align-self: center;
+    margin-left: 5%;
+    width: 90%;
+    size: 5px;
+
+    border-radius: 10px;
+}
+
+
 .leftPane{
     width: 15%;
     float: left;

@@ -9,6 +9,8 @@ window.onload = function () {
 
     var createNewTaskBtn = document.getElementById("addNewTask");
     createNewTaskBtn.addEventListener('click', createNewTaskFunction, false);
+
+
 };
 
 function listOfAllTasksFunction() {
