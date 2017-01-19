@@ -5,8 +5,10 @@
     <table>
         <thead>
             <tr>
-                <td class="">Temat:</td>
-                <td style="min-width: 400px;text-align: left" class="">Szczegóły</td>
+                <td class="">Title:</td>
+                <td style="min-width: 400px;text-align: left" class="">Details:</td>
+                <td >Time to do:</td>
+                <td class="">Edytuj
                 <td class="">Usuń
 
                 </td>
@@ -26,6 +28,20 @@
                     <a class="task-link" id="{{ task["id"] }}">
                         {{ task["details"] }}
                     </a>
+                </td>
+
+                <td style="text-align: left" class="task-link">
+                    <a class="task-link" id="{{ task["id"] }}">
+                        {{ task["timeToDo"] }}
+                    </a>
+                </td>
+
+                <td>
+                    <button class="editButton"
+                            id="{{ task["id"] }}">
+                        <i class="fa fa-pencil-square-o">
+                        </i>
+                    </button>
                 </td>
 
                 <td>
