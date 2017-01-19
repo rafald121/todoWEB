@@ -16,8 +16,30 @@ def hello_world():
 # pobiera ile niezrobionych i wyswietla glowny panel
 @app.route('/main')
 def main():
-    return render_template("mainPage.html", login=session['login'])
+    undoneQuantity = None
 
+    token = session['token']
+    requestData = {'token': token}
+    requestHeaders = {"Content-Type": "application/json"}
+
+    myRequest = Request("http://127.0.0.1:5000/notdone", data=requestData, headers=requestHeaders)
+
+    try:
+        responseJson = urlopen(myRequest)
+        responseJsonData = json.load(responseJson)
+
+        if responseJson.getcode() == 200:
+            undoneQuantity = responseJsonData['undone']
+
+            return render_template("mainPage.html", login = session['login'], undoneQuantity=undoneQuantity)
+        else:
+            return responseJsonData['error']
+    except HTTPError as e:
+        print(e.code)
+        print(e.message)
+        # TODO dodac w mainPage miejsce na komunikaty o np. niepoprawnym wczytaniu          niewykonanych zadań
+        # return render_template("mainPage.html")
+        return responseJsonData['error']
 
 @app.route('/login')
 def login():
@@ -70,9 +92,8 @@ def checkLogin():
             # redirect to todoList
             return redirect(url_for('main'))
         else:
-            return render_template("logowanie.html", error = "hao")
-            # print myResponseDictionary['error']
-            # redirect to login again
+            return render_template("logowanie.html", error = True, errorMessage = "sprawdzic jesli wyskoczy ten komunikat")
+
     except HTTPError as e:
         print e.code
         print e.reason
