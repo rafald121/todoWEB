@@ -111,34 +111,46 @@ def createTask():
 @app.route("/addTask", methods=['POST'])
 def addTask():
 
-    data ={
+    if request.form['tag'] != "":
+        tag=request.form['tag']
+    else:
+        tag="other"
+    data = {
         "title": request.form['newTaskTitle'],
         "details": request.form['newTaskDetails'],
         "timeToDo": request.form['newTaskTimeToDo'],
-        "tag": request.form['tag']
+        "tag": tag
     }
+    dataJson = json.dumps(data)
+    print("tag: ")
+    print(data['tag'])
 
     headers = {
         "token": session['token'],
         "Content-Type": "application/json"
     }
 
-    myRequest = Request("http://127.0.0.1:5000/tasks", data=data, headers=headers)
-
+    myRequest = Request("http://127.0.0.1:5000/tasks", headers=headers, data=dataJson)
+    myRequest.get_method = lambda: "POST"
     try:
+        print("1")
         myResponse = urlopen(myRequest)
+        print("2")
         myResponseData = json.load(myResponse)
-
-        if myResponse.getcode()==201:
+        # TODO dopisac warunek if info = OK \/
+        print("3")
+        if myResponse.getcode() == 201:
             print("udalo sie dodac zadanie")
             print(myResponseData)
-            return redirect(url_for(tasks))
+            return redirect(url_for('main'))
         else:
             return myResponseData['error']
+
     except HTTPError as e:
         print(e.code)
         print(e.message)
         return json.load(e)['error']
+
 
 
 @app.route("/tasks", methods=['GET'])
