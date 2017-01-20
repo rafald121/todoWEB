@@ -1,4 +1,4 @@
-<form  class="newMessageWindow" id="newMessageForm" action="{{ url_for('createTask')}}" method='POST'>
+<form  class="newMessageWindow" id="newMessageForm" action="{{ url_for('addTask')}}" method='POST'>
 
     Tytuł zadania:
     <input type="text" id="newTaskTitle" name="newTaskTitle">
@@ -10,9 +10,9 @@
     <input type="date" id="newTaskTimeToDo" name="newTaskTimeToDo">
     <br><br>
     Tag:
-    <input type="radio" id="schoolTag" name="tag" value="schoolTag"> School
-    <input type="radio" id="workTag" name="tag" value="workTag" > Work
-    <input type="radio" id="homeTag" name="tag" value="homeTag" > Home
+    <input type="radio" id="schoolTag" name="tag" value="school"> School
+    <input type="radio" id="workTag" name="tag" value="work" > Work
+    <input type="radio" id="homeTag" name="tag" value="home" > Home
 
     <input type="submit" id="newTaskConfirm" name="confirmReceiverTitle" value="Add">
 

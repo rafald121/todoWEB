@@ -99,30 +99,47 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+# WYSWIETLA FORMULARZ DO TWORZENIA NOWEGO ZADANIA
 @app.route("/createTask")
 def createTask():
     if 'token' in session:
-
-
-        #
-        #
-        #
-        # data ={
-        #     "title": request.form['newTaskTitle'],
-        #     "details": request.form['newTaskDetails'],
-        #     "timeToDo": request.form['newTaskTimeToDo'],
-        #
-        # }
         return render_template("newTask.html")
-
     else:
         return redirect(url_for('login'))
 
+# DODAJE NOWE ZADANIE DO API
 @app.route("/addTask", methods=['POST'])
 def addTask():
-    selectedTag = request.form['tag']['value']
-    print (selectedTag)
-    return "test"
+
+    data ={
+        "title": request.form['newTaskTitle'],
+        "details": request.form['newTaskDetails'],
+        "timeToDo": request.form['newTaskTimeToDo'],
+        "tag": request.form['tag']
+    }
+
+    headers = {
+        "token": session['token'],
+        "Content-Type": "application/json"
+    }
+
+    myRequest = Request("http://127.0.0.1:5000/tasks", data=data, headers=headers)
+
+    try:
+        myResponse = urlopen(myRequest)
+        myResponseData = json.load(myResponse)
+
+        if myResponse.getcode()==201:
+            print("udalo sie dodac zadanie")
+            print(myResponseData)
+            return redirect(url_for(tasks))
+        else:
+            return myResponseData['error']
+    except HTTPError as e:
+        print(e.code)
+        print(e.message)
+        return json.load(e)['error']
+
 
 @app.route("/tasks", methods=['GET'])
 def tasks():
