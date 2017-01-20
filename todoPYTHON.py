@@ -99,11 +99,30 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-@app.route("/tasks", methods=['POST'])
+@app.route("/createTask")
 def createTask():
-    print("create task clicked and python")
-    return render_template("newTask.html")
+    if 'token' in session:
 
+
+        #
+        #
+        #
+        # data ={
+        #     "title": request.form['newTaskTitle'],
+        #     "details": request.form['newTaskDetails'],
+        #     "timeToDo": request.form['newTaskTimeToDo'],
+        #
+        # }
+        return render_template("newTask.html")
+
+    else:
+        return redirect(url_for('login'))
+
+@app.route("/addTask", methods=['POST'])
+def addTask():
+    selectedTag = request.form['tag']['value']
+    print (selectedTag)
+    return "test"
 
 @app.route("/tasks", methods=['GET'])
 def tasks():
