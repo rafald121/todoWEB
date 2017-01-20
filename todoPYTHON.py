@@ -110,17 +110,23 @@ def createTask():
 # DODAJE NOWE ZADANIE DO API
 @app.route("/addTask", methods=['POST'])
 def addTask():
-
-    if request.form['tag'] != "":
-        tag=request.form['tag']
+    print("addTask1")
+    if request.form['tag'] == None:
+        tag = "other"
     else:
-        tag="other"
+        tag = request.form['tag']
+
+
+    print("addTask2")
+
     data = {
         "title": request.form['newTaskTitle'],
         "details": request.form['newTaskDetails'],
         "timeToDo": request.form['newTaskTimeToDo'],
         "tag": tag
     }
+    print("data to request: ")
+    print(data)
     dataJson = json.dumps(data)
     print("tag: ")
     print(data['tag'])
