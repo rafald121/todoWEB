@@ -228,7 +228,7 @@ def taskContent(id):
         return redirect("login")
 
 @app.route("/getListByTag/" + "<tag>",methods=['GET'])
-def getListByTag():
+def getListByTag(tag):
     if 'token' in session:
 
         headers = {
@@ -236,7 +236,21 @@ def getListByTag():
             "Content-Type": "application/json"
         }
 
-        myRequest = Request("")
+        myRequest = Request("http://127.0.0.1:5000/tasks/" + str(tag), headers=headers)
+
+        try:
+            myResponse = urlopen(myRequest)
+            myResponseData = json.load(myRequest)
+
+            if myResponse.getcode() == 200:
+                return render_template("taskList.html", taskList = myResponseData)
+            else:
+                return myResponseData['error']
+        except HTTPError as e:
+            print(e.code)
+            print(e.message)
+            return json.load(e)['error']
+
 
     else:
         return redirect("login")
