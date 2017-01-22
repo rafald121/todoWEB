@@ -111,11 +111,10 @@ def createTask():
 @app.route("/addTask", methods=['POST'])
 def addTask():
     print("addTask1")
-    if request.form['tag'] == None:
-        tag = "other"
+    if request.form['tag'] != "":
+        tag=request.form['tag']
     else:
-        tag = request.form['tag']
-
+        tag="other"
 
     print("addTask2")
 
@@ -125,7 +124,7 @@ def addTask():
         "timeToDo": request.form['newTaskTimeToDo'],
         "tag": tag
     }
-    print("data to request: ")
+
     print(data)
     dataJson = json.dumps(data)
     print("tag: ")
