@@ -201,7 +201,33 @@ def tasks():
 
 @app.route("/taskContent" + "/" + "<id>", methods=['GET'])
 def taskContent(id):
-    return 't'
+    if 'token' in session:
+
+        headers = {
+            "token": session['token'],
+            "Content-Type": "application/json"
+        }
+
+        myRequest = Request("http://127.0.0.1:5000/tasks" + id, headers=headers)
+
+        try:
+            response = urlopen(myRequest)
+            responseData = json.load(response)
+
+            if response.getcode()==200:
+                task = responseData
+                return render_template("taskContent.html", task=task)
+            else:
+                return "kod odpowiediz inny niż 200"
+
+        except HTTPError as e:
+            print(e.code)
+            print(e.message)
+            return json.load(e)['error']
+
+    else:
+        return redirect("login")
+
 
 @app.route("/allMessages")
 def allMessages():
