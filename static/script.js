@@ -12,16 +12,11 @@ window.onload = function () {
 
     $("#mainPane").on('click', ".task-link", goToTaskContentFunction);
 
-    // var getListByTag = document.getElementsByClassName("taskListByTag");
-    // getListByTag.addEventListener('click', getListByTagFunction, false);
-
-    var test = document.getElementById("schoolList")
-    test.addEventListener('click', testF, false)
+    $(".leftPane").on('click', ".taskListByTag", getListByTagFunction);
+    
 };
 
-function testF() {
-    alert("hao")
-}
+
 
 function listOfAllTasksFunction() {
 

@@ -237,10 +237,15 @@ def getListByTag(tag):
         }
 
         myRequest = Request("http://127.0.0.1:5000/tasks/" + str(tag), headers=headers)
+        myRequest.get_method = lambda: 'GET'
+        print ("http://127.0.0.1:5000/tasks/" + str(tag))
 
         try:
             myResponse = urlopen(myRequest)
-            myResponseData = json.load(myRequest)
+            print "nie dziala"
+            myResponseData = json.load(myResponse)
+            print("myresponsedata")
+            print(myResponseData)
 
             if myResponse.getcode() == 200:
                 return render_template("taskList.html", taskList = myResponseData)
