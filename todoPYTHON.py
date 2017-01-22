@@ -199,6 +199,10 @@ def tasks():
         return redirect(url_for('login'))
 
 
+@app.route("/taskContent" + "/" + "<id>", methods=['GET'])
+def taskContent(id):
+    return 't'
+
 @app.route("/allMessages")
 def allMessages():
     print("przekierowano do allMessages")

@@ -10,7 +10,7 @@ window.onload = function () {
     var createNewTaskBtn = document.getElementById("addNewTask");
     createNewTaskBtn.addEventListener('click', createNewTaskFunction, false);
 
-
+    $("#mainPane").on('click', ".task-link", goToTaskContentFunction);
 };
 
 function listOfAllTasksFunction() {
@@ -39,4 +39,23 @@ function createNewTaskFunction() {
             currSection.innerHTML = response;
         }
     })
+}
+
+function goToTaskContentFunction() {
+
+    var taskID = $(this).attr("id")
+
+    $ajax({
+        type: "GET",
+        url: "http://127.0.0.1:4999/taskContent/" + taskID.toString(),
+        dataType: "json",
+
+        success: function (response) {
+
+            var currSection = document.getElementById("mainPane");
+            currSection.innerHTML = response
+
+        }
+    })
+
 }
