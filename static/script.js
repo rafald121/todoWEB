@@ -43,12 +43,12 @@ function createNewTaskFunction() {
 
 function goToTaskContentFunction() {
 
-    var taskID = $(this).attr("id")
+    var taskID = $(this).attr("id");
 
-    $ajax({
+    $.ajax({
         type: "GET",
         url: "http://127.0.0.1:4999/taskContent/" + taskID.toString(),
-        dataType: "json",
+        dataType: "text",
 
         success: function (response) {
 
