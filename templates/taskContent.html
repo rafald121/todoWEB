@@ -9,6 +9,7 @@
                 <td style="min-width: 400px;text-align: left"><b>Details</b></td>
                 <td><b>Time to do</b></td>
                 <td><b>Tag</b></td>
+                <td><b>Done</b></td>
                 <td><b>Edit</b></td>
                 <td><b>Delete</b></td>
             </tr>
@@ -31,12 +32,34 @@
                {{ task['tag']  }}
             </td>
 
-            <td id="{{ task['id'] }}">
-                <i class="fa fa-pencil-square-o"></i>
+            <td>
+                    {% if task["done"] %}
+                        <button class="checkButton1" id="{{ task["id"] }}">
+                            <i class="fa fa-check">
+                            </i>
+                        </button>
+
+                    {% else %}
+                        <button class="checkButton0" id="{{ task["id"] }}">
+                            <i class="fa fa-close">
+                            </i>
+                        </button>
+                    {% endif %}
+                </td>
+
+
+            <td>
+                <button class="editButton" id="{{ task["id"] }}">
+                    <i class="fa fa-pencil-square-o">
+                    </i>
+                </button>
             </td>
 
-            <td id="{{ task['id'] }}">
-                <i class="fa fa-trash"></i>
+            <td>
+                <button class="deleteButton" id="{{ task["id"] }}">
+                    <i class="fa fa-trash">
+                    </i>
+                </button>
             </td>
         </table>
     {% endif %}

@@ -180,16 +180,6 @@ def tasks():
 
             return render_template("taskList.html", taskList=listOfTask)
 
-            # titleList = []
-            # detailsList = []
-            #
-            # for singleTask in tasksData:
-            #     titleList.append(singleTask['title'])
-            #     detailsList.append(singleTask['details'])
-
-            # print(titleList)
-            # print(detailsList)
-
         except HTTPError as e:
             print(e.code)
             print(e.message)
@@ -237,6 +227,19 @@ def taskContent(id):
     else:
         return redirect("login")
 
+@app.route("/getListByTag/" + "<tag>",methods=['GET'])
+def getListByTag():
+    if 'token' in session:
+
+        headers = {
+            "token": session['token'],
+            "Content-Type": "application/json"
+        }
+
+        myRequest = Request("")
+
+    else:
+        return redirect("login")
 
 @app.route("/allMessages")
 def allMessages():
