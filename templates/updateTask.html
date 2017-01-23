@@ -1,21 +1,36 @@
 
 {% if task is defined %}
 
-    <form  class="newMessageWindow" id="newMessageForm" action="{{ url_for('addTask')}}" method='POST'>
+    <form  class="newMessageWindow" id="newMessageForm" action="{{ url_for('updateTask')}}" method='PUT'>
 
         Tytuł zadania:
-        <input type="text" id="newTaskTitle" name="newTaskTitle">
+        <input type="text" id="newTaskTitle" name="newTaskTitle" value="{{ task['title'] }}">
         <br>
-        Szczegóły wiadomości:
-        <input type="text" id="newTaskDetails" name="newTaskDetails">
+        Task details:
+        <input type="text" id="newTaskDetails" name="newTaskDetails" value="{{ task['details'] }}">
         <br>
-        Czas na zrobienie:
-        <input type="text" id="newTaskTimeToDo" name="newTaskTimeToDo">
+        Time to do task:
+        <input type="text" id="newTaskTimeToDo" name="newTaskTimeToDo" value="{{ task['timeToDo'] }}">
         <br><br>
+{#       NEW \/#}
+
+        Done:
+        <input type="checkbox" id="newTaskDone" name="newTaskDone" value="{{ task['done'] }}"> I have a bike<br>
+
         Tag:
-        <input type="radio" id="schoolTag" name="tag" value="school"> School
-        <input type="radio" id="workTag" name="tag" value="work" > Work
-        <input type="radio" id="homeTag" name="tag" value="home" > Home
+        {% if task['tag']=='school' %}
+            <input type="radio" id="schoolTag" name="tag" value="school" checked> School
+            <input type="radio" id="workTag" name="tag" value="work" > Work
+            <input type="radio" id="homeTag" name="tag" value="home" > Home
+        {% elif task['tag']=='work' %}
+            <input type="radio" id="schoolTag" name="tag" value="school" > School
+            <input type="radio" id="workTag" name="tag" value="work" checked> Work
+            <input type="radio" id="homeTag" name="tag" value="home"> Home
+        {% else %}
+            <input type="radio" id="schoolTag" name="tag" value="school" > School
+            <input type="radio" id="workTag" name="tag" value="work" > Work
+            <input type="radio" id="homeTag" name="tag" value="home" checked> Home
+        {% endif %}
 
         <input type="submit" id="newTaskConfirm" name="confirmReceiverTitle" value="Add">
 
