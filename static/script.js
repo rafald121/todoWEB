@@ -15,6 +15,10 @@ window.onload = function () {
     $(".leftPane").on('click', ".taskListByTag", getListByTagFunction);
 
     $("section").on('click', ".deleteButton", deleteTaskFunction);
+
+    $("section").on('click', ".checkButton", editTaskFunction);
+
+
 };
 
 
@@ -90,6 +94,23 @@ function deleteTaskFunction(){
     $.ajax({
         type: "DELETE",
         url: "http://127.0.0.1:4999/deleteTask/" + taskID.toString(),
+        dataType: "text",
+
+        success: function (response) {
+            var currSection = document.getElementById("mainPane");
+            currSection.innerHTML = response
+
+        }
+    })
+}
+
+function editTaskFunction(){
+
+    var taskID = $(this).attr("id");
+
+    $.ajax({
+        type: "PUT",
+        url: "http://127.0.0.1:4999/editTask/" + taskID.toString(),
         dataType: "text",
 
         success: function (response) {
