@@ -227,6 +227,11 @@ def taskContent(id):
     else:
         return redirect("login")
 
+@app.route("/deleteTask/" + "<id>", methods=['DELETE'])
+def deleteTask(id):
+    return "test"
+
+
 @app.route("/getListByTag/" + "<tag>",methods=['GET'])
 def getListByTag(tag):
     if 'token' in session:
