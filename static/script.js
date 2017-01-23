@@ -14,7 +14,7 @@ window.onload = function () {
 
     $(".leftPane").on('click', ".taskListByTag", getListByTagFunction);
 
-    $("section").on('click', ".fa-trash", deleteTaskFunction)
+    $("section").on('click', ".deleteButton", deleteTaskFunction);
 };
 
 

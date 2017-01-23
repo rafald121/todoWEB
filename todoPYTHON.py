@@ -225,10 +225,43 @@ def taskContent(id):
             return json.load(e)['error']
 
     else:
-        return redirect("login")
+        return redirect(url_for("login"))
 
 @app.route("/deleteTask/" + "<id>", methods=['DELETE'])
 def deleteTask(id):
+    print("tukej")
+    if 'token' in session:
+
+        headers = {
+            "token": session['token'],
+            "Content-Type": "application/json"
+        }
+
+        myRequest = Request("http://127.0.0.1:5000/tasks/" + str(id), headers=headers)
+        myRequest.get_method = lambda: 'DELETE'
+        print ("http://127.0.0.1:5000/tasks/" + str(id))
+
+        try:
+            myResponse = urlopen(myRequest)
+            print("111")
+            myResponseData = json.load(myResponse)
+            print("222")
+            listOfTask = myResponseData
+            print listOfTask
+            print(myResponse.getcode())
+            if myResponse.getcode() == 200:
+                print "po ifie"
+                return render_template("taskList.html", taskList = listOfTask)
+            else:
+                return "ZLY KOD GETCODE"
+        except HTTPError as e:
+            print(e.code)
+            print(e.message)
+            return json.load(e)['error']
+
+
+    else:
+        return redirect(url_for("login"))
     return "test"
 
 
@@ -263,7 +296,7 @@ def getListByTag(tag):
 
 
     else:
-        return redirect("login")
+        return redirect(url_for("login"))
 
 @app.route("/allMessages")
 def allMessages():
