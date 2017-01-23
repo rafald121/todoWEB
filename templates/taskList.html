@@ -10,7 +10,7 @@
                 <td><b>Time to do</b></td>
                 <td><b>Tag</b></td>
                 <td><b>Done</b></td>
-                <td><b>Edit</b></td>
+{#                <td><b>Edit</b></td>#}
                 <td><b>Delete</b></td>
             </tr>
         </thead>
@@ -18,25 +18,25 @@
         {% for task in taskList %}
 
             <tr>
-                <td class="task-link">
+                <td class="titleItem">
                     <a class="task-link" id="{{ task["id"] }}">
                         {{ task["title"] }}
                     </a>
                 </td>
 
-                <td style="text-align: left" class="task-link">
+                <td style="text-align: left" class="detailsItem">
                     <a class="task-link" id="{{ task["id"] }}">
                         {{ task["details"] }}
                     </a>
                 </td>
 {#TODO po kliknieciu w taga otwiera sie lista tagow (pomysl) #}
-                <td style="text-align: left;min-width: 75px"  class="task-link">
+                <td style="text-align: left;min-width: 75px"  class="timeToDoItem">
                     <a class="task-link" id="{{ task["id"] }}">
                         {{ task["timeToDo"] }}
                     </a>
                 </td>
 
-                <td style="text-align: left" class="task-link">
+                <td style="text-align: left" class="tagItem">
                     <a class="task-link" id="{{ task["id"] }}">
                         {{ task["tag"] }}
                     </a>
@@ -44,29 +44,29 @@
 
                 <td>
                     {% if task["done"] %}
-                        <button class="checkButton"
-                            id="{{ task["id"] }}">
+{#                        <button class="checkButton"#}
+{#                            id="{{ task["id"] }}">#}
                             <i class="fa fa-check">
                             </i>
-                        </button>
+{#                        </button>#}
 
                     {% else %}
-                        <button class="checkButton"
-                                id="{{ task["id"] }}">
+{#                        <button class="checkButton"#}
+{#                                id="{{ task["id"] }}">#}
                             <i class="fa fa-close">
                             </i>
-                        </button>
+{#                        </button>#}
                     {% endif %}
                 </td>
 
-
-                <td>
-                    <button class="editButton"
-                            id="{{ task["id"] }}">
-                        <i class="fa fa-pencil-square-o">
-                        </i>
-                    </button>
-                </td>
+{##}
+{#                <td>#}
+{#                    <button class="editButton"#}
+{#                            id="{{ task["id"] }}">#}
+{#                        <i class="fa fa-pencil-square-o">#}
+{#                        </i>#}
+{#                    </button>#}
+{#                </td>#}
 
 
                 <td>
