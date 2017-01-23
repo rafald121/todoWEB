@@ -118,10 +118,17 @@ def addTask():
 
     print("addTask2")
 
+    title = request.form['newTaskTitle']
+    details = request.form['newTaskDetails']
+    timeToDo = request.form['newTaskTimeToDo']
+
+    if title==None or details == None or timeToDo == None:
+        return "MUSISZ UZUPELNIC POLA "
+
     data = {
-        "title": request.form['newTaskTitle'],
-        "details": request.form['newTaskDetails'],
-        "timeToDo": request.form['newTaskTimeToDo'],
+        "title": title,
+        "details": details,
+        "timeToDo": timeToDo,
         "tag": tag
     }
 
