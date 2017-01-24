@@ -233,12 +233,36 @@ def taskContent(id):
     else:
         return redirect(url_for("login"))
 
+@app.route("/clickEdit/" + "<id>", methods=['PUT'])
+def clickEdit(id):
+    print("przekierowuje?")
+    if 'token' in session:
+        print("hmm?")
+        data = json.loads(request.data)
+        values = {
+            "title": data['title'],
+            "details": data['details'],
+            "timeToDo": data['timeToDo'],
+            "tag": data['tag'],
+            "done": 1,
+            "id": id
+        }
+        print values
+        # headers = {
+        #     'Content-Type': 'application/json',
+        #     'token': session['token']
+        # }
 
-@app.route("/editTask/" + "<id>", methods=['PUT'])
-def editTask(id):
+        return render_template("updateTask.html", tasks=values)
+
+
+    else:
+        return redirect(url_for("login"))
+
+@app.route("/updateTask/" + "<id>", methods=['PUT'])
+def updateTask(id):
     print("dziala editask nr:. " + str(id))
     if 'token' in session:
-
 
 
 

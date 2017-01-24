@@ -1,34 +1,34 @@
 <div id="taskContent">
 
     {% if task is defined %}
-        <table>
+        <table class="tableWithTaskContent">
 
             <thead>
-            <tr>
-                <td><b>Title</b></td>
-                <td style="min-width: 400px;text-align: left"><b>Details</b></td>
-                <td><b>Time to do</b></td>
-                <td><b>Tag</b></td>
-                <td><b>Done</b></td>
-                <td><b>Edit</b></td>
-                <td><b>Delete</b></td>
-            </tr>
-        </thead>
+                <tr>
+                    <td><b>Title</b></td>
+                    <td style="min-width: 400px;text-align: left"><b>Details</b></td>
+                    <td><b>Time to do</b></td>
+                    <td><b>Tag</b></td>
+                    <td><b>Done</b></td>
+                    <td><b>Edit</b></td>
+                    <td><b>Delete</b></td>
+                </tr>
+           </thead>
 
-            <td>
+            <td id="taskContentTitle">
                 {{ task['title'] }}
             </td>
 
 
-            <td style="text-align: left" >
+            <td style="text-align: left" id="taskContentDetails">
                 {{ task['details'] }}
             </td>
 
-            <td style="text-align: left;min-width: 75px">
+            <td style="text-align: left;min-width: 75px" id="taskContentTimeToDo">
                 {{ task['timeToDo'] }}
             </td>
 
-            <td>
+            <td id="taskContentTag">
                {{ task['tag']  }}
             </td>
 
