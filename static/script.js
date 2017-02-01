@@ -19,10 +19,28 @@ window.onload = function () {
 
     $("section").on('click', ".editButton", clickEdit);
 
+    $("section").on('click', ".newTaskConfirm", showListAfterAddTask);
 };
 
+function showListAfterAddTask() {
+    alert("hao");
+    
+    $.ajax({
+        type:"PUT",
+        url:"http://127.0.0.1:4999/tasks",
+        dataType: "text",
+        success: function (response) {
+
+            var currSection = document.getElementById("mainPane");
+            currSection.innerHTML = response;
+
+        }
+    })
+
+}
+
 function clickEdit() {
-    alert("HAO")
+
     var taskID = jQuery(this).attr("id");
     alert("taskID: " + taskID);
     $.ajax({
@@ -39,18 +57,7 @@ function clickEdit() {
         $('#mainPane').html(reply);
     });
 }
-    // var taskID = $(this).attr("id");
-    //
-    // $.ajax({
-    //     type: "PUT",
-    //     url: "http://127.0.0.1:4999/clickEdit/" + taskID.toString(),
-    //     dataType: "text",
-    //
-    //     success: function (response) {
-    //         var currSection = document.getElementById("mainPane");
-    //         currSection.innerHTML = response;
-    //     }
-    // })
+
 
 
 
