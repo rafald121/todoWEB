@@ -191,7 +191,7 @@ def tasks():
         except HTTPError as e:
             print(e.code)
             print(e.message)
-            return json.load(e)['error']
+            return json.load(e)
 
     else:
         return redirect(url_for('login'))
