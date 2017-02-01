@@ -19,12 +19,13 @@ window.onload = function () {
 
     $("section").on('click', ".editButton", clickEdit);
 
-    $("section").on('click', ".newTaskConfirm", showListAfterAddTask);
+    $("#mainPane").on('click', "#newTaskConfirm", showListAfterAddTask);
 };
 
 function showListAfterAddTask() {
+
     alert("hao");
-    
+
     $.ajax({
         type:"PUT",
         url:"http://127.0.0.1:4999/tasks",
