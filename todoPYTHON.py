@@ -123,8 +123,11 @@ def addTask():
     title = request.form['newTaskTitle']
     details = request.form['newTaskDetails']
     timeToDo = request.form['newTaskTimeToDo']
-
-    if title == None or details == None or timeToDo == None:
+    print(title, details, timeToDo)
+    if(timeToDo==""):
+        print ("CO JEST!!!!")
+    if title == "" or details == "" or timeToDo == "":
+        print("ktores z pol jest puste!!!")
         return "MUSISZ UZUPELNIC POLA "
 
     data = {

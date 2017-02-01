@@ -24,8 +24,6 @@ window.onload = function () {
 
 function showListAfterAddTask() {
 
-    alert("hao");
-
     $.ajax({
         type:"PUT",
         url:"http://127.0.0.1:4999/tasks",
