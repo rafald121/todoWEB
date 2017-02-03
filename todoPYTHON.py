@@ -6,14 +6,12 @@ from flask import url_for
 app = Flask(__name__)
 app.secret_key = "fwgjebhuih4"
 
-
 @app.route('/')
 def hello_world():
     if 'token' in session:
         return redirect(url_for("main"))
     else:
         return redirect(url_for("login"))
-
 
 # pobiera ile niezrobionych i wyswietla glowny panel
 @app.route('/main', methods=['GET'])
@@ -39,14 +37,12 @@ def main():
             print(e.message)
             return json.load(e)['error']
 
-
 @app.route('/login')
 def login():
     if 'token' in session:
         return redirect(url_for("main"))
     else:
         return render_template("logowanie.html")
-
 
 # TODO co zmieni gdy usune POST albo GET
 @app.route('/checkLogin', methods=['POST', 'GET'])
@@ -93,12 +89,10 @@ def checkLogin():
         return render_template("logowanie.html", error=True, errorMessage=json.load(e)['error'])
         # return render_template("logowanie.html", error=myResponseDictionary['error'])
 
-
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('login'))
-
 
 # WYSWIETLA FORMULARZ DO TWORZENIA NOWEGO ZADANIA
 @app.route("/createTask")
@@ -107,7 +101,6 @@ def createTask():
         return render_template("newTask.html")
     else:
         return redirect(url_for('login'))
-
 
 # DODAJE NOWE ZADANIE DO API
 @app.route("/addTask", methods=['POST'])
@@ -168,6 +161,32 @@ def addTask():
         print(e.message)
         return json.load(e)['error']
 
+def getListOfTasks():
+    if 'token' in session:
+
+        headers = {
+            'token': session['token']
+        }
+
+        myRequest = Request("http://127.0.0.1:5000/tasks", headers=headers)
+        myRequest.get_method = lambda: 'GET'
+
+        try:
+            myResponse = urlopen(myRequest)
+            tasksData = json.load(myResponse)
+
+            listOfTask = tasksData
+            print (listOfTask)
+
+            return listOfTask
+
+        except HTTPError as e:
+            print(e.code)
+            print(e.message)
+            return json.load(e)
+
+    else:
+        return redirect(url_for('login'))
 
 @app.route("/tasks", methods=['GET'])
 def tasks():
@@ -198,7 +217,6 @@ def tasks():
 
     else:
         return redirect(url_for('login'))
-
 
 @app.route("/taskContent/" + "<id>", methods=['GET'])
 def taskContent(id):
@@ -298,7 +316,6 @@ def updateTask(id):
     else:
         return redirect(url_for("login"))
 
-
 @app.route("/deleteTask/" + "<id>", methods=['DELETE'])
 def deleteTask(id):
     print("tukej")
@@ -323,6 +340,7 @@ def deleteTask(id):
             print(myResponse.getcode())
             if myResponse.getcode() == 200:
                 print "po ifie"
+
                 return render_template("taskList.html", taskList=listOfTask)
             else:
                 return "ZLY KOD GETCODE"
@@ -334,7 +352,6 @@ def deleteTask(id):
 
     else:
         return redirect(url_for("login"))
-
 
 @app.route("/getListByTag/" + "<tag>", methods=['GET'])
 def getListByTag(tag):
@@ -368,14 +385,6 @@ def getListByTag(tag):
 
     else:
         return redirect(url_for("login"))
-
-
-@app.route("/allMessages")
-def allMessages():
-    print("przekierowano do allMessages")
-
-    return "test"
-
 
 if __name__ == '__main__':
     app.run(port=4999, debug=True)
