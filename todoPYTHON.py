@@ -213,7 +213,8 @@ def tasks():
         except HTTPError as e:
             print(e.code)
             print(e.message)
-            return json.load(e)
+            print("haloookurde")
+            return json.load(e)['error']
 
     else:
         return redirect(url_for('login'))
@@ -335,12 +336,12 @@ def deleteTask(id):
             print("111")
             myResponseData = json.load(myResponse)
             print("222")
-            listOfTask = myResponseData
-            print listOfTask
-            print(myResponse.getcode())
-            if myResponse.getcode() == 200:
-                print "po ifie"
+            deletedTask = myResponseData
 
+            if myResponse.getcode() == 200:
+                print(myResponse.getcode())
+
+                listOfTask = getListOfTasks()
                 return render_template("taskList.html", taskList=listOfTask)
             else:
                 return "ZLY KOD GETCODE"
