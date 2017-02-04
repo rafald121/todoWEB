@@ -123,8 +123,11 @@ def addTask():
     title = request.form['newTaskTitle']
     details = request.form['newTaskDetails']
     timeToDo = request.form['newTaskTimeToDo']
-
-    if title == None or details == None or timeToDo == None:
+    print(title, details, timeToDo)
+    if (timeToDo == ""):
+        print ("CO JEST!!!!")
+    if title == "" or details == "" or timeToDo == "":
+        print("ktores z pol jest puste!!!")
         return "MUSISZ UZUPELNIC POLA "
 
     data = {
@@ -166,10 +169,7 @@ def addTask():
         return json.load(e)['error']
 
 
-@app.route("/tasks", methods=['GET'])
-def tasks():
-    print("in tasks")
-    print(session['token'])
+def getListOfTasks():
     if 'token' in session:
 
         headers = {
@@ -186,11 +186,49 @@ def tasks():
             listOfTask = tasksData
             print (listOfTask)
 
-            return render_template("taskList.html", taskList=listOfTask)
+            return listOfTask
 
         except HTTPError as e:
             print(e.code)
             print(e.message)
+            return json.load(e)
+
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route("/tasks", methods=['GET'])
+def tasks():
+    print("in tasks")
+    print(session['token'])
+    if 'token' in session:
+
+        headers = {
+            'token': session['token']
+        }
+
+        myRequest = Request("http://127.0.0.1:5000/tasks", headers=headers)
+        myRequest.get_method = lambda: 'GET'
+
+        try:
+            myResponse = urlopen(myRequest)
+            print("1111bug error: ")
+            print (myResponse.getcode())
+            tasksData = json.load(myResponse)
+            print("2222bug error: ")
+            print (myResponse.getcode())
+            listOfTask = tasksData
+            print (listOfTask)
+
+            return render_template("taskList.html", taskList=listOfTask)
+
+        except HTTPError as e:
+            print("code ")
+            print(e.code)
+
+            print("message ")
+            print(e.message)
+            print("haloookurde")
             return json.load(e)['error']
 
     else:
@@ -234,13 +272,37 @@ def taskContent(id):
         return redirect(url_for("login"))
 
 
-@app.route("/editTask/" + "<id>", methods=['PUT'])
-def editTask(id):
+@app.route("/clickEdit/" + "<id>", methods=['PUT'])
+def clickEdit(id):
+    print("przekierowuje?")
+    if 'token' in session:
+        print("hmm?")
+        data = json.loads(request.data)
+        values = {
+            "title": data['title'],
+            "details": data['details'],
+            "timeToDo": data['timeToDo'],
+            "tag": data['tag'],
+            "done": 1,
+            "id": id
+        }
+        print values
+        # headers = {
+        #     'Content-Type': 'application/json',
+        #     'token': session['token']
+        # }
+
+        return render_template("updateTask.html", tasks=values)
+
+
+    else:
+        return redirect(url_for("login"))
+
+
+@app.route("/updateTask/" + "<id>", methods=['PUT'])
+def updateTask(id):
     print("dziala editask nr:. " + str(id))
     if 'token' in session:
-
-
-
 
         headers = {
             "token": session['token'],
@@ -291,11 +353,12 @@ def deleteTask(id):
             print("111")
             myResponseData = json.load(myResponse)
             print("222")
-            listOfTask = myResponseData
-            print listOfTask
-            print(myResponse.getcode())
+            deletedTask = myResponseData
+
             if myResponse.getcode() == 200:
-                print "po ifie"
+                print(myResponse.getcode())
+
+                listOfTask = getListOfTasks()
                 return render_template("taskList.html", taskList=listOfTask)
             else:
                 return "ZLY KOD GETCODE"
@@ -341,13 +404,6 @@ def getListByTag(tag):
 
     else:
         return redirect(url_for("login"))
-
-
-@app.route("/allMessages")
-def allMessages():
-    print("przekierowano do allMessages")
-
-    return "test"
 
 
 if __name__ == '__main__':
