@@ -6,12 +6,14 @@ from flask import url_for
 app = Flask(__name__)
 app.secret_key = "fwgjebhuih4"
 
+
 @app.route('/')
 def hello_world():
     if 'token' in session:
         return redirect(url_for("main"))
     else:
         return redirect(url_for("login"))
+
 
 # pobiera ile niezrobionych i wyswietla glowny panel
 @app.route('/main', methods=['GET'])
@@ -37,12 +39,14 @@ def main():
             print(e.message)
             return json.load(e)['error']
 
+
 @app.route('/login')
 def login():
     if 'token' in session:
         return redirect(url_for("main"))
     else:
         return render_template("logowanie.html")
+
 
 # TODO co zmieni gdy usune POST albo GET
 @app.route('/checkLogin', methods=['POST', 'GET'])
@@ -89,10 +93,12 @@ def checkLogin():
         return render_template("logowanie.html", error=True, errorMessage=json.load(e)['error'])
         # return render_template("logowanie.html", error=myResponseDictionary['error'])
 
+
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('login'))
+
 
 # WYSWIETLA FORMULARZ DO TWORZENIA NOWEGO ZADANIA
 @app.route("/createTask")
@@ -101,6 +107,7 @@ def createTask():
         return render_template("newTask.html")
     else:
         return redirect(url_for('login'))
+
 
 # DODAJE NOWE ZADANIE DO API
 @app.route("/addTask", methods=['POST'])
@@ -117,7 +124,7 @@ def addTask():
     details = request.form['newTaskDetails']
     timeToDo = request.form['newTaskTimeToDo']
     print(title, details, timeToDo)
-    if(timeToDo==""):
+    if (timeToDo == ""):
         print ("CO JEST!!!!")
     if title == "" or details == "" or timeToDo == "":
         print("ktores z pol jest puste!!!")
@@ -161,6 +168,7 @@ def addTask():
         print(e.message)
         return json.load(e)['error']
 
+
 def getListOfTasks():
     if 'token' in session:
 
@@ -188,6 +196,7 @@ def getListOfTasks():
     else:
         return redirect(url_for('login'))
 
+
 @app.route("/tasks", methods=['GET'])
 def tasks():
     print("in tasks")
@@ -203,21 +212,28 @@ def tasks():
 
         try:
             myResponse = urlopen(myRequest)
+            print("1111bug error: ")
+            print (myResponse.getcode())
             tasksData = json.load(myResponse)
-
+            print("2222bug error: ")
+            print (myResponse.getcode())
             listOfTask = tasksData
             print (listOfTask)
 
             return render_template("taskList.html", taskList=listOfTask)
 
         except HTTPError as e:
+            print("code ")
             print(e.code)
+
+            print("message ")
             print(e.message)
             print("haloookurde")
             return json.load(e)['error']
 
     else:
         return redirect(url_for('login'))
+
 
 @app.route("/taskContent/" + "<id>", methods=['GET'])
 def taskContent(id):
@@ -255,6 +271,7 @@ def taskContent(id):
     else:
         return redirect(url_for("login"))
 
+
 @app.route("/clickEdit/" + "<id>", methods=['PUT'])
 def clickEdit(id):
     print("przekierowuje?")
@@ -281,12 +298,11 @@ def clickEdit(id):
     else:
         return redirect(url_for("login"))
 
+
 @app.route("/updateTask/" + "<id>", methods=['PUT'])
 def updateTask(id):
     print("dziala editask nr:. " + str(id))
     if 'token' in session:
-
-
 
         headers = {
             "token": session['token'],
@@ -316,6 +332,7 @@ def updateTask(id):
             return json.load(e)['error']
     else:
         return redirect(url_for("login"))
+
 
 @app.route("/deleteTask/" + "<id>", methods=['DELETE'])
 def deleteTask(id):
@@ -354,6 +371,7 @@ def deleteTask(id):
     else:
         return redirect(url_for("login"))
 
+
 @app.route("/getListByTag/" + "<tag>", methods=['GET'])
 def getListByTag(tag):
     if 'token' in session:
@@ -386,6 +404,7 @@ def getListByTag(tag):
 
     else:
         return redirect(url_for("login"))
+
 
 if __name__ == '__main__':
     app.run(port=4999, debug=True)
