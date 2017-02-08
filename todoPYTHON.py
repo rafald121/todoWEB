@@ -304,7 +304,18 @@ def updateTask(id):
     print("dziala editask nr:. " + str(id))
     if 'token' in session:
 
-        
+        # data = json.loads(request.data)
+
+        data = request.data
+
+        # values = {
+        #     'title': data['title'],
+        #     'details': data['details'],
+        #     'timeToDo': data['timeToDo'],
+        #     'tag': data['tag']
+        # }
+        taskToEdit =
+        print data
 
         headers = {
             "token": session['token'],
