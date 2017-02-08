@@ -117,13 +117,13 @@ table {
 /*}*/
 
 /*NEW TASK*/
-#newTaskTitle, #newTaskDetails, #newTaskTimeToDo{
+#newTaskTitle, #newTaskDetails, #newTaskTimeToDo, #updateTaskTitle, #updateTaskDetails, #updateTaskTimeToDo{
 	width: 30%;
 	position: absolute;
 	left: 15%;
 }
 
-#newTaskConfirm{
+#newTaskConfirm, #updateTaskConfirm{
 	position: absolute;
 	left: 15%;
 	width: 30%;

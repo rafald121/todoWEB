@@ -262,14 +262,11 @@ def getTask(id):
     myRequest = Request("http://127.0.0.1:5000/tasks/" + str(id), headers=headers)
     myRequest.get_method = lambda: 'GET'
     try:
-        print("response?")
         response = urlopen(myRequest)
-        print("response!")
         responseData = json.load(response)
 
         if response.getcode() == 200:
             task = responseData
-            print(task)
             return task
         else:
             return "kod odpowiediz inny niż 200"
@@ -280,8 +277,8 @@ def getTask(id):
 
 
 
-@app.route("/updateTask/" + "<id>", methods=['PUT'])
-def updateTask(id):
+@app.route("/editForm/" + "<id>", methods=['PUT'])
+def editForm(id):
     print("przekierowuje?")
     if 'token' in session:
         print("hmm?")
@@ -293,14 +290,17 @@ def updateTask(id):
         #     'Content-Type': 'application/json',
         #     'token': session['token']
         # }
-
-        # return render_template("updateTask.html", tasks=)
+        passedUrl = 'updateTask/'+str(id)
+        print passedUrl
+        return render_template("updateTask.html", task=task, passedUrl=passedUrl)
 
 
     else:
         return redirect(url_for("login"))
 
-
+@app.route("/updateTask/" + "<id>", methods=['PUT'])
+def updateTask(id):
+    print "clicked updateTask function"
 # @app.route("/updateTask/" + "<id>", methods=['PUT'])
 # def updateTask(id):
 #     print("dziala editask nr:. " + str(id))

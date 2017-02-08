@@ -17,7 +17,7 @@ window.onload = function () {
 
     $("section").on('click', ".deleteButton", deleteTaskFunction);
 
-    $("section").on('click', ".editButton", updateTask);
+    $("section").on('click', ".editButton", showEditTaskForm);
 
     $("#mainPane").on('click', "#newTaskConfirm", showListAfterAddTask);
 };
@@ -58,14 +58,14 @@ function showListAfterAddTask() {
 //
 // })
 
-function updateTask() {
+function showEditTaskForm() {
 
     var taskID = jQuery(this).attr("id");
+
     $.ajax({
         type: "PUT",
-        url: "http://127.0.0.1:4999/updateTask/" + taskID.toString(),
-        contentType: 'application/json',
-        data: taskID,
+        url: "http://127.0.0.1:4999/editForm/" + taskID.toString(),
+        dataType: "text",
         success: function (response) {
             var currSection = document.getElementById("mainPane");
             currSection.innerHTML = response;
