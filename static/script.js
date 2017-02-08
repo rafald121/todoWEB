@@ -17,7 +17,7 @@ window.onload = function () {
 
     $("section").on('click', ".deleteButton", deleteTaskFunction);
 
-    $("section").on('click', ".editButton", clickEdit);
+    // $("section").on('click', ".editButton", clickEdit);
 
     $("#mainPane").on('click', "#newTaskConfirm", showListAfterAddTask);
 };
@@ -38,10 +38,9 @@ function showListAfterAddTask() {
 
 }
 
-function clickEdit() {
+$('#mainPane').on('click', '#editNote', function () {
 
     var taskID = jQuery(this).attr("id");
-    alert("taskID: " + taskID);
     $.ajax({
         type: "PUT",
         url: "http://127.0.0.1:4999/clickEdit/" + taskID.toString(),
@@ -50,12 +49,32 @@ function clickEdit() {
             title: $('#taskContentTitle').val(),
             details: $('#taskContentDetails').val(),
             timeToDo: $('#taskContentTimeToDo').val(),
-            tag: $('#taskContentTag').val(),
+            tag: $('#taskContentTag').val()
+        }).done(function (reply) {
+            $('#mainPane').html(reply)
         })
-    }).done(function (reply) {
-        $('#mainPane').html(reply);
-    });
-}
+    })
+
+})
+
+// function clickEdit() {
+//
+//     var taskID = jQuery(this).attr("id");
+//     alert("taskID: " + taskID);
+//     $.ajax({
+//         type: "PUT",
+//         url: "http://127.0.0.1:4999/clickEdit/" + taskID.toString(),
+//         contentType: 'application/json',
+//         data: JSON.stringify({
+//             title: $('#taskContentTitle').val(),
+//             details: $('#taskContentDetails').val(),
+//             timeToDo: $('#taskContentTimeToDo').val(),
+//             tag: $('#taskContentTag').val(),
+//         })
+//     }).done(function (reply) {
+//         $('#mainPane').html(reply);
+//     });
+// }
 
 
 

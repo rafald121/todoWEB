@@ -304,6 +304,8 @@ def updateTask(id):
     print("dziala editask nr:. " + str(id))
     if 'token' in session:
 
+        
+
         headers = {
             "token": session['token'],
             "Content-Type": "application/json"
