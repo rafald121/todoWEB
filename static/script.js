@@ -17,7 +17,7 @@ window.onload = function () {
 
     $("section").on('click', ".deleteButton", deleteTaskFunction);
 
-    $("section").on('click', ".editButton", clickEdit);
+    $("section").on('click', ".editButton", updateTask);
 
     $("#mainPane").on('click', "#newTaskConfirm", showListAfterAddTask);
 };
@@ -58,7 +58,7 @@ function showListAfterAddTask() {
 //
 // })
 
-function clickEdit() {
+function updateTask() {
 
     var taskID = jQuery(this).attr("id");
     $.ajax({

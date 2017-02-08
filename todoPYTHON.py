@@ -197,6 +197,7 @@ def getListOfTasks():
         return redirect(url_for('login'))
 
 
+
 @app.route("/tasks", methods=['GET'])
 def tasks():
     print("in tasks")
@@ -314,7 +315,8 @@ def updateTask(id):
         #     'timeToDo': data['timeToDo'],
         #     'tag': data['tag']
         # }
-        taskToEdit =
+        # taskToEdit =
+
         print data
 
         headers = {
