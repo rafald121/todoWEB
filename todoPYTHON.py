@@ -286,21 +286,25 @@ def editForm(id):
         task = getTask(id)
 
         print task
+
         # headers = {
         #     'Content-Type': 'application/json',
         #     'token': session['token']
         # }
-        passedUrl = 'updateTask/'+str(id)
-        print passedUrl
-        return render_template("updateTask.html", task=task, passedUrl=passedUrl)
-
+        # passedUrl = 'updateTask/'+str(id)
+        # print passedUrl
+        return render_template("updateTask.html", task=task)
 
     else:
         return redirect(url_for("login"))
 
-@app.route("/updateTask/" + "<id>", methods=['PUT'])
-def updateTask(id):
-    print "clicked updateTask function"
+# @app.route("/updateTask/", methods=['PUT'])
+# def updateTask(id):
+#     print "clicked updateTask function"
+#     print("tag")
+#     print id
+
+
 # @app.route("/updateTask/" + "<id>", methods=['PUT'])
 # def updateTask(id):
 #     print("dziala editask nr:. " + str(id))

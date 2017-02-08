@@ -1,10 +1,12 @@
-<div id="taskEditContent">
+{#<div id="taskEditContent">#}
     {% if task is defined %}
-    {% set urlLink = task['id'] %}
 
-        <form  class="updateTaskWindow" id="updateTaskWindow"
-               action="http://127.0.0.1:4999/updateTask/" + {{ urlLink }}
+        <form  class="updateTaskWindow"
+               id="updateTaskWindow"
+{#               action="{{ url_for('addTask') }}"#}
                method='PUT'>
+{#               action="http://127.01:4999/updateTask/6"#}
+
 
             Tytuł zadania:
             <input type="text" id="updateTaskTitle" name="updateTaskTitle" value="{{ task['title'] }}">
@@ -37,9 +39,9 @@
                 <input type="radio" id="homeTag" name="tag" value="home" checked> Home
             {% endif %}
 
-            <input type="submit" id="updateTaskConfirm" name="updateTaskConfirm"  value="Add">
+            <input type="submit" id="updateTaskConfirm" name="updateTaskConfirm"  value="Update">
 
         </form>
 
     {% endif %}
-</div>
+{#</div>#}
