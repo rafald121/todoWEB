@@ -112,23 +112,23 @@ def createTask():
 # DODAJE NOWE ZADANIE DO API
 @app.route("/addTask", methods=['POST'])
 def addTask():
-    print("addTask1")
+
     if request.form['tag'] != "":
         tag = request.form['tag']
+    elif request.form['tag'] == "":
+        return render_template("errorEmptyNewTask.html")
     else:
-        tag = "other"
-
-    print("addTask2")
+        return "unexpected error while assigning tag to variable in /addTask"
 
     title = request.form['newTaskTitle']
     details = request.form['newTaskDetails']
     timeToDo = request.form['newTaskTimeToDo']
+
     print(title, details, timeToDo)
-    if (timeToDo == ""):
-        print ("CO JEST!!!!")
+
     if title == "" or details == "" or timeToDo == "":
         print("ktores z pol jest puste!!!")
-        return "MUSISZ UZUPELNIC POLA "
+        return render_template("errorEmptyNewTask.html")
 
     data = {
         "title": title,
@@ -137,10 +137,7 @@ def addTask():
         "tag": tag
     }
 
-    print(data)
     dataJson = json.dumps(data)
-    print("tag: ")
-    print(data['tag'])
 
     headers = {
         "token": session['token'],
@@ -150,16 +147,14 @@ def addTask():
     myRequest = Request("http://127.0.0.1:5000/tasks", headers=headers, data=dataJson)
     myRequest.get_method = lambda: "POST"
     try:
-        print("1")
         myResponse = urlopen(myRequest)
-        print("2")
         myResponseData = json.load(myResponse)
-        # TODO dopisac warunek if info = OK \/
-        print("3")
         if myResponse.getcode() == 201:
-            print("udalo sie dodac zadanie")
+            print("dodano zadanie: ")
             print(myResponseData)
+            # TODO jak sprawić, aby po kliknięciu "dodaj" wyświetlało listę wiadomości
             return redirect(url_for('main'))
+
         else:
             return myResponseData['error']
 
@@ -167,6 +162,7 @@ def addTask():
         print(e.code)
         print(e.message)
         return json.load(e)['error']
+
 
 
 def getListOfTasks():

@@ -20,13 +20,16 @@ window.onload = function () {
     $("section").on('click', ".editButton", showEditTaskForm);
 
     $("#mainPane").on('click', "#newTaskConfirm", showListAfterAddTask);
+
+
 };
 
 function showListAfterAddTask() {
 
+
     $.ajax({
-        type:"PUT",
-        url:"http://127.0.0.1:4999/tasks",
+        type:"POST",
+        url:"http://127.0.0.1:4999/addTask",
         dataType: "text",
         success: function (response) {
 
