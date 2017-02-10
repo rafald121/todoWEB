@@ -392,6 +392,7 @@ def deleteTask(id):
 
 @app.route("/getListByTag/" + "<tag>", methods=['GET'])
 def getListByTag(tag):
+    print("getListByTag")
     if 'token' in session:
 
         headers = {

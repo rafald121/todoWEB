@@ -5,11 +5,15 @@
 
 window.onload = function () {
 
+     var createNewTaskBtn = document.getElementById("addNewTask");
+    createNewTaskBtn.addEventListener('click', createNewTaskFunction, false);
+
     var showAllTasksBtn = document.getElementById("listOfAllTasks");
     showAllTasksBtn.addEventListener('click',listOfAllTasksFunction, false);
 
-    var createNewTaskBtn = document.getElementById("addNewTask");
-    createNewTaskBtn.addEventListener('click', createNewTaskFunction, false);
+    var showDoneTasksBtn = document.getElementById("doneTasks");
+    showDoneTasksBtn.addEventListener('click', listOfDoneTasksFunction, false);
+
 
     $("#mainPane").on('click', ".task-link", goToTaskContentFunction);
 
@@ -23,6 +27,20 @@ window.onload = function () {
 
 
 };
+
+function listOfDoneTasksFunction() {
+    alert("done tasks clicked")
+
+     $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:4999/getListByTag/done",
+        dataType: "text",
+        success: function (response) {
+            var currSection = document.getElementById("mainPane");
+            currSection.innerHTML = response;
+        }
+    })
+}
 
 function showListAfterAddTask() {
 

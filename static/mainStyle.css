@@ -54,7 +54,7 @@ table {
     opacity:0.6;
 }
 
-.addNewTask, .listOfAllTasks, .taskListByTag{
+.addNewTask, .listOfAllTasks, .taskListByTag, .doneTasks, .undoneTasks{
     background: #6b7375;
     width: 70%;
     height: 45px;
