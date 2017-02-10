@@ -173,6 +173,7 @@ def addTask():
     else:
         return redirect(url_for("login"))
 
+
 # POBIERA LISTE ZADAN Z SERWERA
 def getListOfTasks():
     if 'token' in session:
@@ -218,9 +219,15 @@ def tasks():
         try:
             myResponse = urlopen(myRequest)
             tasksData = json.load(myResponse)
-            listOfTask = tasksData
-
-            return render_template("taskList.html", taskList=listOfTask)
+            if myResponse.getcode() == 200:
+                print (" jest git ")
+                listOfTask = tasksData
+                return render_template("taskList.html", taskList=listOfTask)
+            else:
+                print"blad czy nie"
+                return render_template("taskList.html",
+                                       error=True,
+                                       errorMsg="Error has occured while getting list of tasks from server, probably response code is other than expected")
 
         except HTTPError as e:
             print(e.code)
@@ -232,15 +239,18 @@ def tasks():
 
 @app.route("/taskContent/" + "<id>", methods=['GET'])
 def taskContent(id):
-    print("1")
     if 'token' in session:
 
         task = getTask(id)
-        if task is None:
-            return "nie pobrano zadania z funkcji getTask(id)"
-        else:
-            print("pobrano zadania z funkcji getTask(id) i renderuje task_content")
 
+        print("hao")
+        # print task['title']
+        print("hao1")
+
+        if task['title'] is None:
+            print ("hao2")
+            return render_template("errorWhileGettingSingleTask.html")
+        else:
             return render_template("taskContent.html", task=task)
 
     else:

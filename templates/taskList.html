@@ -1,4 +1,12 @@
+{% if error  %}
+
+<p>{{ errorMsg }}</p>
+
+{% else %}
+
+
 <h1>Your list of tasks to do: </h1>
+
 
 <div id="taskListDiv">
 
@@ -82,4 +90,5 @@
 
     </table>
 </div>
+{% endif %}
 
