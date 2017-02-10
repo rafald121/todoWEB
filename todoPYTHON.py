@@ -38,7 +38,8 @@ def main():
             print(e.code)
             print(e.message)
             return json.load(e)['error']
-
+    else:
+        return redirect(url_for("login"))
 
 @app.route('/login')
 def login():
@@ -206,7 +207,6 @@ def getListOfTasks():
 
 @app.route("/tasks", methods=['GET'])
 def tasks():
-    print(session['token'])
     if 'token' in session:
 
         headers = {
@@ -377,7 +377,7 @@ def deleteTask(id):
                 if listOfTask == "There was not task with this id in server, " \
                                  "probably other client deleted task before you":
                     return render_template("errorWhileDeletingTask.html")
-                
+
                 return render_template("taskList.html", taskList=listOfTask)
             else:
                 return render_template("errorWhileDeletingTask.html")
