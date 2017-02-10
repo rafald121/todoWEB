@@ -48,14 +48,15 @@ def login():
         return render_template("logowanie.html")
 
 
-# TODO co zmieni gdy usune POST albo GET
-@app.route('/checkLogin', methods=['POST', 'GET'])
+# co zmieni gdy usune POST albo GET
+#  odpowiedź: nic, metoda działa z 'methods=['POST']'
+@app.route('/checkLogin', methods=['POST'])
 def checkLogin():
-    myResponseDictionary = None
-    # TODO error that is returning when login or password is valid
-
     login = request.form['login']
     password = request.form['password']
+
+    if login == "" or password == "":
+        return render_template("logowanie.html", error=True, errorMessage="Fill login and password to log in")
 
     data = {
         "login": login,
@@ -69,8 +70,6 @@ def checkLogin():
     jsonData = json.dumps(data)
 
     myRequest = Request("http://127.0.0.1:5000/login", data=jsonData, headers=headers)
-    # TODO co to daje \/
-    # myRequest.get_method = lambda: 'POST'
 
     try:
         myResponse = urlopen(myRequest)
@@ -81,19 +80,28 @@ def checkLogin():
             session['login'] = login
             session['id'] = myResponseDictionary['userID']
 
-            # TODO redirect to todoList
+            # TODO redirect to todoList,
+            # ta sama sytuacja co w dodaj nowe zadanie,
+            # formularz ma swoje pole "action" i wykonuje je i ma pierwszeństwo przed
+            # ewentualnym przyciskiem dodanym w javascript
+            # jak załadować todoList po kliknięciu ZALOGUJ
+            # albo jak przypisać funkcję zaloguj (pobiera dane z formularza,
+            # wykonuje funkcje w pythonie, zwraca html w miejsce, które podane w javascript))
+            #  w javascript
             return redirect(url_for('main'))
         else:
-            return render_template("logowanie.html", error=True, errorMessage="sprawdzic jesli wyskoczy ten komunikat")
+            return render_template("logowanie.html",
+                                   error=True,
+                                   errorMessage="Server do not respond or bad code of request")
 
     except HTTPError as e:
         print e.code
         print e.reason
         # TODO sprawic, aby errorMessage zwracalo blad z API
         return render_template("logowanie.html", error=True, errorMessage=json.load(e)['error'])
-        # return render_template("logowanie.html", error=myResponseDictionary['error'])
 
 
+# WYLOGOWUJE UZYTKOWNIKA
 @app.route('/logout')
 def logout():
     session.clear()
@@ -112,59 +120,60 @@ def createTask():
 # DODAJE NOWE ZADANIE DO API
 @app.route("/addTask", methods=['POST'])
 def addTask():
-
-    if request.form['tag'] != "":
-        tag = request.form['tag']
-    elif request.form['tag'] == "":
-        return render_template("errorEmptyNewTask.html")
-    else:
-        return "unexpected error while assigning tag to variable in /addTask"
-
-    title = request.form['newTaskTitle']
-    details = request.form['newTaskDetails']
-    timeToDo = request.form['newTaskTimeToDo']
-
-    print(title, details, timeToDo)
-
-    if title == "" or details == "" or timeToDo == "":
-        print("ktores z pol jest puste!!!")
-        return render_template("errorEmptyNewTask.html")
-
-    data = {
-        "title": title,
-        "details": details,
-        "timeToDo": timeToDo,
-        "tag": tag
-    }
-
-    dataJson = json.dumps(data)
-
-    headers = {
-        "token": session['token'],
-        "Content-Type": "application/json"
-    }
-
-    myRequest = Request("http://127.0.0.1:5000/tasks", headers=headers, data=dataJson)
-    myRequest.get_method = lambda: "POST"
-    try:
-        myResponse = urlopen(myRequest)
-        myResponseData = json.load(myResponse)
-        if myResponse.getcode() == 201:
-            print("dodano zadanie: ")
-            print(myResponseData)
-            # TODO jak sprawić, aby po kliknięciu "dodaj" wyświetlało listę wiadomości
-            return redirect(url_for('main'))
-
+    if 'token' in session:
+        if request.form['tag'] != "":
+            tag = request.form['tag']
+        elif request.form['tag'] == "":
+            return render_template("errorEmptyNewTask.html")
         else:
-            return myResponseData['error']
+            return "unexpected error while assigning tag to variable in /addTask"
 
-    except HTTPError as e:
-        print(e.code)
-        print(e.message)
-        return json.load(e)['error']
+        title = request.form['newTaskTitle']
+        details = request.form['newTaskDetails']
+        timeToDo = request.form['newTaskTimeToDo']
 
+        print(title, details, timeToDo)
 
+        if title == "" or details == "" or timeToDo == "":
+            print("ktores z pol jest puste!!!")
+            return render_template("errorEmptyNewTask.html")
 
+        data = {
+            "title": title,
+            "details": details,
+            "timeToDo": timeToDo,
+            "tag": tag
+        }
+
+        dataJson = json.dumps(data)
+
+        headers = {
+            "token": session['token'],
+            "Content-Type": "application/json"
+        }
+
+        myRequest = Request("http://127.0.0.1:5000/tasks", headers=headers, data=dataJson)
+        myRequest.get_method = lambda: "POST"
+        try:
+            myResponse = urlopen(myRequest)
+            myResponseData = json.load(myResponse)
+            if myResponse.getcode() == 201:
+                print("dodano zadanie: ")
+                print(myResponseData)
+                # TODO jak sprawić, aby po kliknięciu "dodaj" wyświetlało listę wiadomości
+                return redirect(url_for('main'))
+
+            else:
+                return myResponseData['error']
+
+        except HTTPError as e:
+            print(e.code)
+            print(e.message)
+            return json.load(e)['error']
+    else:
+        return redirect(url_for("login"))
+
+# POBIERA LISTE ZADAN Z SERWERA
 def getListOfTasks():
     if 'token' in session:
 
@@ -179,10 +188,11 @@ def getListOfTasks():
             myResponse = urlopen(myRequest)
             tasksData = json.load(myResponse)
 
-            listOfTask = tasksData
-            print (listOfTask)
-
-            return listOfTask
+            if myResponse.getcode() == 200:
+                listOfTask = tasksData
+                return listOfTask
+            else:
+                return myResponse['error']
 
         except HTTPError as e:
             print(e.code)
@@ -193,10 +203,8 @@ def getListOfTasks():
         return redirect(url_for('login'))
 
 
-
 @app.route("/tasks", methods=['GET'])
 def tasks():
-    print("in tasks")
     print(session['token'])
     if 'token' in session:
 
@@ -209,25 +217,15 @@ def tasks():
 
         try:
             myResponse = urlopen(myRequest)
-            print("1111bug error: ")
-            print (myResponse.getcode())
             tasksData = json.load(myResponse)
-            print("2222bug error: ")
-            print (myResponse.getcode())
             listOfTask = tasksData
-            print (listOfTask)
 
             return render_template("taskList.html", taskList=listOfTask)
 
         except HTTPError as e:
-            print("code ")
             print(e.code)
-
-            print("message ")
             print(e.message)
-            print("haloookurde")
             return json.load(e)['error']
-
     else:
         return redirect(url_for('login'))
 
@@ -272,7 +270,6 @@ def getTask(id):
         return json.load(e)['error']
 
 
-
 @app.route("/editForm/" + "<id>", methods=['PUT'])
 def editForm(id):
     print("przekierowuje?")
@@ -293,6 +290,7 @@ def editForm(id):
 
     else:
         return redirect(url_for("login"))
+
 
 # @app.route("/updateTask/", methods=['PUT'])
 # def updateTask(id):
