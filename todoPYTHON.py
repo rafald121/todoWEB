@@ -243,12 +243,7 @@ def taskContent(id):
 
         task = getTask(id)
 
-        print("hao")
-        # print task['title']
-        print("hao1")
-
-        if task['title'] is None:
-            print ("hao2")
+        if task == "brak zadania o danym ID w bazie danych":
             return render_template("errorWhileGettingSingleTask.html")
         else:
             return render_template("taskContent.html", task=task)
@@ -262,7 +257,6 @@ def getTask(id):
         "token": session['token'],
         "Content-Type": "application/json"
     }
-
     myRequest = Request("http://127.0.0.1:5000/tasks/" + str(id), headers=headers)
     myRequest.get_method = lambda: 'GET'
     try:
@@ -273,7 +267,7 @@ def getTask(id):
             task = responseData
             return task
         else:
-            return "kod odpowiediz inny niż 200"
+            return "error"
     except HTTPError as e:
         print(e.code)
         print(e.message)
