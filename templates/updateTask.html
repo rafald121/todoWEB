@@ -1,38 +1,49 @@
+{#<div id="taskEditContent">#}
+    {% if task is defined %}
 
-{% if task is defined %}
+        <form  class="updateTaskWindow"
+               id="updateTaskWindow"
+               action="http://127.0.0.1:4999/updateTask"
+               method='PUT'>
 
-    <form  class="newMessageWindow" id="newMessageForm" action="{{ url_for('updateTask')}}" method='PUT'>
+            {#               action="{{ url_for('addTask') }}"#}
+            {#               action="http://127.01:4999/updateTask/6"#}
 
-        Tytuł zadania:
-        <input type="text" id="newTaskTitle" name="newTaskTitle" value="{{ task['title'] }}">
-        <br>
-        Task details:
-        <input type="text" id="newTaskDetails" name="newTaskDetails" value="{{ task['details'] }}">
-        <br>
-        Time to do task:
-        <input type="text" id="newTaskTimeToDo" name="newTaskTimeToDo" value="{{ task['timeToDo'] }}">
-        <br><br>
-{#       NEW \/#}
-        Done:
-        <input type="checkbox" id="newTaskDone" name="newTaskDone" value="{{ task['done'] }}"> I have a bike<br>
 
-        Tag:
-        {% if task['tag']=='school' %}
-            <input type="radio" id="schoolTag" name="tag" value="school" checked> School
-            <input type="radio" id="workTag" name="tag" value="work" > Work
-            <input type="radio" id="homeTag" name="tag" value="home" > Home
-        {% elif task['tag']=='work' %}
-            <input type="radio" id="schoolTag" name="tag" value="school" > School
-            <input type="radio" id="workTag" name="tag" value="work" checked> Work
-            <input type="radio" id="homeTag" name="tag" value="home"> Home
-        {% else %}
-            <input type="radio" id="schoolTag" name="tag" value="school" > School
-            <input type="radio" id="workTag" name="tag" value="work" > Work
-            <input type="radio" id="homeTag" name="tag" value="home" checked> Home
-        {% endif %}
+            Tytuł zadania:
+            <input type="text" id="updateTaskTitle" name="updateTaskTitle" value="{{ task['title'] }}">
+            <br>
+            Task details:
+            <input type="text" id="updateTaskDetails" name="updateTaskDetails" value="{{ task['details'] }}">
+            <br>
+            Time to do task:
+            <input type="text" id="updateTaskTimeToDo" name="updateTaskTimeToDo" value="{{ task['timeToDo'] }}">
+            <br><br>
+    {#       NEW \/#}
+            Done:
+            <input type="checkbox" id="updateTaskDone" name="updateTaskDone" value="{{ task['done'] }}">
+            Jeśli zadanie zakończone, kliknij w kwadrat
 
-        <input type="submit" id="newTaskConfirm" name="confirmReceiverTitle" value="Add">
+            <br>
 
-    </form>
+            Tag:
+            {% if task['tag']=='school' %}
+                <input type="radio" id="schoolTag" name="tag" value="school" checked> School
+                <input type="radio" id="workTag" name="tag" value="work" > Work
+                <input type="radio" id="homeTag" name="tag" value="home" > Home
+            {% elif task['tag']=='work' %}
+                <input type="radio" id="schoolTag" name="tag" value="school" > School
+                <input type="radio" id="workTag" name="tag" value="work" checked> Work
+                <input type="radio" id="homeTag" name="tag" value="home"> Home
+            {% else %}
+                <input type="radio" id="schoolTag" name="tag" value="school" > School
+                <input type="radio" id="workTag" name="tag" value="work" > Work
+                <input type="radio" id="homeTag" name="tag" value="home" checked> Home
+            {% endif %}
 
-{% endif %}
+            <input type="submit" id="updateTaskConfirm" name="updateTaskConfirm"  value="Update">
+
+        </form>
+
+    {% endif %}
+{#</div>#}
