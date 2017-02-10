@@ -354,7 +354,6 @@ def editForm(id):
 
 @app.route("/deleteTask/" + "<id>", methods=['DELETE'])
 def deleteTask(id):
-    print("tukej")
     if 'token' in session:
 
         headers = {
@@ -368,23 +367,24 @@ def deleteTask(id):
 
         try:
             myResponse = urlopen(myRequest)
-            print("111")
             myResponseData = json.load(myResponse)
-            print("222")
+
             deletedTask = myResponseData
 
             if myResponse.getcode() == 200:
-                print(myResponse.getcode())
-
                 listOfTask = getListOfTasks()
+
+                if listOfTask == "There was not task with this id in server, " \
+                                 "probably other client deleted task before you":
+                    return render_template("errorWhileDeletingTask.html")
+                
                 return render_template("taskList.html", taskList=listOfTask)
             else:
-                return "ZLY KOD GETCODE"
+                return render_template("errorWhileDeletingTask.html")
         except HTTPError as e:
             print(e.code)
             print(e.message)
             return json.load(e)['error']
-
 
     else:
         return redirect(url_for("login"))
@@ -401,14 +401,10 @@ def getListByTag(tag):
 
         myRequest = Request("http://127.0.0.1:5000/tasks/" + str(tag), headers=headers)
         myRequest.get_method = lambda: 'GET'
-        print ("http://127.0.0.1:5000/tasks/" + str(tag))
 
         try:
             myResponse = urlopen(myRequest)
-            print "nie dziala"
             myResponseData = json.load(myResponse)
-            print("myresponsedata")
-            print(myResponseData)
 
             if myResponse.getcode() == 200:
                 return render_template("taskList.html", taskList=myResponseData)
@@ -418,7 +414,6 @@ def getListByTag(tag):
             print(e.code)
             print(e.message)
             return json.load(e)['error']
-
 
     else:
         return redirect(url_for("login"))
