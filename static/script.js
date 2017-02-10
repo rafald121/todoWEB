@@ -14,6 +14,8 @@ window.onload = function () {
     var showDoneTasksBtn = document.getElementById("doneTasks");
     showDoneTasksBtn.addEventListener('click', listOfDoneTasksFunction, false);
 
+    var showUndoneTasksBtn = document.getElementById("undoneTasks");
+    showUndoneTasksBtn.addEventListener('click', listOfUndoneTasksFunction, false);
 
     $("#mainPane").on('click', ".task-link", goToTaskContentFunction);
 
@@ -27,6 +29,18 @@ window.onload = function () {
 
 
 };
+function listOfUndoneTasksFunction() {
+
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:4999/getListByTag/undone",
+        dataType: "text",
+        success: function (response) {
+            var currSection = document.getElementById("mainPane");
+            currSection.innerHTML = response;
+        }
+    })
+}
 
 function listOfDoneTasksFunction() {
     alert("done tasks clicked")
