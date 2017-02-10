@@ -27,23 +27,23 @@
             <div class="listOfAllTasks">
                 <a id="listOfAllTasks">
 
-                    Tasks list
-{#                TODO uruchomic ilość niewykonanych zadań #}
-                    {% if undoneQuantity !=0 %},<br>
-                        Undone({{ undoneQuantity }})
+                    All tasks
+                    {% if allQuantity !=0 %}
+                        ({{ allQuantity }})
                     {% endif %}
                 </a>
             </div>
 
             <div class="doneTasks">
                 <a id="doneTasks">
-                    Done tasks
+                    Done tasks ({{ doneQuantity }})
 
                 </a>
             </div>
             <div class="undoneTasks">
                 <a id="undoneTasks">
-                    Undone tasks
+
+                    Undone tasks ({{ undoneQuantity }})
 
                 </a>
             </div>

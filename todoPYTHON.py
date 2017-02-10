@@ -29,10 +29,16 @@ def main():
 
             if responseJson.getcode() == 200:
                 undoneQuantity = responseJsonData['undone']
+                doneQuantity = responseJsonData['done']
+                allQuantity = responseJsonData['all']
             else:
                 responseJsonData = {"error": "response code is not 200"}
 
-            return render_template("mainPage.html", login=session['login'], undoneQuantity=undoneQuantity)
+            return render_template("mainPage.html",
+                                   login=session['login'],
+                                   undoneQuantity=undoneQuantity,
+                                   doneQuantity=doneQuantity,
+                                   allQuantity=allQuantity)
 
         except HTTPError as e:
             print(e.code)

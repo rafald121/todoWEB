@@ -43,7 +43,6 @@ function listOfUndoneTasksFunction() {
 }
 
 function listOfDoneTasksFunction() {
-    alert("done tasks clicked")
 
      $.ajax({
         type: "GET",
